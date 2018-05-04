@@ -1,0 +1,13 @@
+<accordion>
+  <accordion-group *ngFor="let menu of expandableMenu" heading="{{ menu.title }}" panelClass="border-secondary">
+    <div class="list-group">
+      <a 
+          *ngFor="let sm of menu.subMenus" 
+          [routerLink]="sm.route"
+          class="list-group-item list-group-item-action"
+          >
+          {{ sm.title }}
+      </a>
+  </div>
+  </accordion-group>
+</accordion>

@@ -1,0 +1,9 @@
+.navbar-brand img {
+    height: 30px;
+    border-radius: 30%;
+    background-size: cover;
+}
+
+.nav-item a {
+    cursor: pointer;
+}

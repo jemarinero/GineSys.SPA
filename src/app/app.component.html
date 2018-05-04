@@ -1,2 +1,7 @@
-<app-nav *ngIf="authService.loggedIn()"></app-nav>
-<router-outlet></router-outlet>
+<app-sidenav>
+    <app-nav *ngIf="authService.loggedIn()"></app-nav>
+    <div class="container">
+        <router-outlet></router-outlet>
+    </div>
+</app-sidenav>
+

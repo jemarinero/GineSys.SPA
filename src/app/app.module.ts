@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 import { HomeComponent } from '../shared/components/home/home.component';
 import { LoginComponent } from '../shared/components/login/login.component';
@@ -15,6 +16,10 @@ import { AuthGuard } from '../shared/services/auth-guard.service';
 import { AuthService } from '../shared/services/auth.service';
 import { AppComponent } from './app.component';
 import { NavComponent } from '../shared/components/nav/nav.component';
+import { SidenavComponent } from '../shared/components/sidenav/sidenav.component';
+import { MatButtonModule, MatSidenavModule, MatIconModule, MatExpansionModule, MatListModule } from '@angular/material';
+import { MenuComponent } from '../shared/components/menu/menu.component';
+import { UsuariosComponent } from '../admin/components/usuarios/usuarios.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -25,7 +30,10 @@ export function tokenGetter() {
     AppComponent,
     HomeComponent,
     LoginComponent,
-    NavComponent
+    NavComponent,
+    SidenavComponent,
+    MenuComponent,
+    UsuariosComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +41,13 @@ export function tokenGetter() {
     NoopAnimationsModule,
     HttpModule,
     FormsModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatExpansionModule,
+    MatListModule,
     BsDropdownModule.forRoot(),
+    AccordionModule.forRoot(),
     ToastModule.forRoot(),
     HttpClientModule,
     JwtModule.forRoot({
@@ -43,7 +57,8 @@ export function tokenGetter() {
     }),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-      { path: 'login', component: LoginComponent }
+      { path: 'login', component: LoginComponent },
+      { path: 'usuarios', component: UsuariosComponent, canActivate: [AuthGuard] },
     ])
   ],
   providers: [

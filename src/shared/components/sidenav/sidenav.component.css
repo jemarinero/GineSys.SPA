@@ -1,0 +1,13 @@
+.gine-drawer {
+    width: 300px;
+}
+
+.menu-button {
+    top: 15px;
+    position: absolute;
+    z-index: 99;
+}
+
+.info-box {
+    height: 200px;
+}
