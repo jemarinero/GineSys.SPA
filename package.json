@@ -13,6 +13,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^5.2.0",
+    "@angular/cdk": "^6.0.0",
     "@angular/common": "^5.2.0",
     "@angular/compiler": "^5.2.0",
     "@angular/core": "^5.2.0",
@@ -21,9 +22,12 @@
     "@angular/platform-browser": "^5.2.0",
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
-    "angular-toastr": "^2.1.1",
+    "@auth0/angular-jwt": "^1.1.0",
     "bootstrap": "^4.1.1",
+    "bootswatch": "^4.1.1",
     "core-js": "^2.4.1",
+    "font-awesome": "^4.7.0",
+    "ng2-toastr": "^4.1.2",
     "ngx-bootstrap": "^2.0.4",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"
