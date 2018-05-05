@@ -20,6 +20,10 @@ import { SidenavComponent } from '../shared/components/sidenav/sidenav.component
 import { MatButtonModule, MatSidenavModule, MatIconModule, MatExpansionModule, MatListModule } from '@angular/material';
 import { MenuComponent } from '../shared/components/menu/menu.component';
 import { UsuariosComponent } from '../admin/components/usuarios/usuarios.component';
+import { OcupacionesComponent } from '../core/components/ocupaciones/ocupaciones.component';
+import { appRoutes } from './routes';
+import { ReligionesComponent } from '../core/components/religiones/religiones.component';
+import { AseguradorasComponent } from '../core/components/aseguradoras/aseguradoras.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -33,7 +37,10 @@ export function tokenGetter() {
     NavComponent,
     SidenavComponent,
     MenuComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    OcupacionesComponent,
+    ReligionesComponent,
+    AseguradorasComponent
   ],
   imports: [
     BrowserModule,
@@ -55,11 +62,7 @@ export function tokenGetter() {
         tokenGetter: tokenGetter
       }
     }),
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-      { path: 'login', component: LoginComponent },
-      { path: 'usuarios', component: UsuariosComponent, canActivate: [AuthGuard] },
-    ])
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [
     AuthService,

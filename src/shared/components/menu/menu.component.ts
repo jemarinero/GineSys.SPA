@@ -25,6 +25,23 @@ export class MenuComponent implements OnInit {
   initMenu() {
     this.expandableMenu = [
       { 
+        title: 'Config. General',
+        subMenus: [
+          {
+            title: 'Ocupaciones',
+            route: '/ocupaciones'
+          },
+          {
+            title: 'Religiones',
+            route: '/religiones'
+          },
+          {
+            title: 'Aseguradoras',
+            route: '/aseguradoras'
+          }
+        ]
+      },
+      { 
         title: 'Administacion',
         subMenus: [
           {

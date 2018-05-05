@@ -1,13 +1,27 @@
 
 <mat-drawer-container fullscreen>
   <mat-drawer class="gine-drawer" #drawer mode="push">
-    <div class="card text-white bg-info mb-1" style="max-width: 20rem; border-radius: 0;">
+    <div class="card text-white bg-info mb-0" style="max-width: 20rem; border-radius: 0;">
       <div class="card-header" >Informacion de Usuario</div>
-      <div class="card-body">
-        <h4 class="card-title">Usuario: {{ infoUsuario.unique_name }}</h4>
-        <p class="card-text mb-1">Nombre: {{ infoUsuario.nombreUsuario }} </p>
-        <p class="card-text mb-1">Es Doctor: {{ infoUsuario.isDoctor == 'True' ? 'Si' : 'No' }}</p>        
-        <p class="card-text mb-1">Es Administrador: {{ infoUsuario.isAdmin == 'True' ? 'Si' : 'No' }} </p>
+      <div class="card-body p-2">
+        <table>
+          <tr>
+            <td><h5 class="card-title">Usuario:</h5></td>
+            <td><span class="badge badge-secondary">{{ infoUsuario?.unique_name }}</span></td>
+          </tr>
+          <tr>
+            <td><p class="card-text mb-0">Nombre:</p></td>
+            <td><span class="badge badge-secondary">{{ infoUsuario?.nombreUsuario }}</span></td>
+          </tr>
+          <tr>
+            <td><p class="card-text mb-0">Es Doctor: </p>        </td>
+            <td><span class="badge badge-secondary">{{ infoUsuario?.isDoctor == 'True' ? 'Si' : 'No' }}</span></td>
+          </tr>
+          <tr>
+            <td><p class="card-text mb-0">Es Administrador:  </p></td>
+            <td><span class="badge badge-secondary">{{ infoUsuario?.isAdmin == 'True' ? 'Si' : 'No' }}</span></td>
+          </tr>
+        </table>
       </div>
     </div>
     <app-menu></app-menu>
