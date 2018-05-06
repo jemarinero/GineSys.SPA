@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { AlertifyService } from './../../services/alertify.service';
 
 @Component({
   selector: 'app-nav',
@@ -11,7 +12,8 @@ export class NavComponent {
 
   
   constructor(private authService: AuthService,
-    private router: Router) {
+    private router: Router,
+    private alertify: AlertifyService) {
     
    }
 
@@ -23,6 +25,7 @@ export class NavComponent {
     this.authService.userToken = null;
     localStorage.removeItem('token');
     this.router.navigate(['/login']);
+    this.alertify.message('Salio del Sistema');
   }
 
 }

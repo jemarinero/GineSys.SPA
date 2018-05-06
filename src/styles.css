@@ -1,7 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "../node_modules/bootswatch/dist/journal/bootstrap.min.css";
-@import "ng2-toastr/bundles/ng2-toastr.min.css";
 @import "../node_modules/font-awesome/css/font-awesome.min.css";
 
 html,
@@ -11,4 +12,54 @@ body {
 
 .fa-danger {
   color: #F57A00;
+}
+
+.panel-body, .panel-heading {
+  padding: 3px !important;
+}
+
+.panel {
+  border-radius: 0 !important;
+}
+
+.mat-form-field {
+  margin-top: 10px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+  min-width: 500px;;
+}
+
+.mat-row {
+  min-height: 24px !important;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  padding: 10px;
+}
+
+.button-row {
+  display: flex;
+  align-items: right;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.button-row button {
+  margin-left: 10px;
+}
+
+input:-moz-read-only { /* For Firefox */
+  color: #c2c2c2;
+}
+
+input:read-only { 
+  color: #c2c2c2;
 }

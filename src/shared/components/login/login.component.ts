@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertifyService } from './../../services/alertify.service';
 
 @Component({
   selector: 'app-login',
@@ -12,10 +12,8 @@ export class LoginComponent implements OnInit {
   model: any = {};
 
   constructor(private authService: AuthService,
-    private toastr: ToastsManager, 
-    vcr: ViewContainerRef,
+    private alertify: AlertifyService, 
     private router: Router) {
-    this.toastr.setRootViewContainerRef(vcr);
    }
 
    ngOnInit() {
@@ -28,10 +26,10 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.model)
       .subscribe(data => {
         this.router.navigate([this.authService.getActiveUrl()]);
-        this.toastr.success('logged in successfully');
+        this.alertify.success('Bienvenido '+ this.authService.decodedToken.nombreUsuario);
       },
       error => {
-        this.toastr.error(error);
+        this.alertify.error('Permiso Denegado!');
       });
   }
 }

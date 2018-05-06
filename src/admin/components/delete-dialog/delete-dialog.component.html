@@ -1,0 +1,23 @@
+<div class="alert alert-danger">
+  <h3>Eliminacion de Registros</h3>
+</div>
+<div class="page-container  mat-elevation-z2">
+  <h2 mat-dialog-title>¿Está seguro que desea eliminar el registro?</h2>
+  <mat-dialog-content>Información: {{ info }}</mat-dialog-content>
+</div>
+<div class="button-row">
+<button 
+  mat-mini-fab 
+  [mat-dialog-close]="true" 
+  matTooltip="Si"
+  class="bg-success text-white">
+  <mat-icon>check</mat-icon>
+</button>
+<button 
+  mat-mini-fab 
+  mat-dialog-close 
+  matTooltip="No"
+  class="bg-danger text-white">
+  <mat-icon>cancel</mat-icon>
+</button>
+</div>

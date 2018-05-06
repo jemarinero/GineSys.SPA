@@ -1,0 +1,58 @@
+<form #f="ngForm">
+  <div class="alert alert-warning">
+      <h3> Editar Ocupacion</h3>
+  </div>
+  <div class="page-container mat-elevation-z4">
+    <ng-container>
+      <mat-form-field>
+        <input matInput 
+          placeholder="Codigo" 
+          [(ngModel)]="ocupacion.id" 
+          name="id" 
+          #id="ngModel" 
+          readonly>
+      </mat-form-field>
+    </ng-container>
+    <mat-form-field>
+      <input matInput 
+        placeholder="Descripcion" 
+        [(ngModel)]="ocupacion.descripcion" 
+        name="descripcion" 
+        #descripcion="ngModel" >
+    </mat-form-field>
+    <ng-container>
+      <mat-form-field>
+        <input matInput 
+          placeholder="Fecha Creacion" 
+          [(ngModel)]="ocupacion.fechaCreacion" 
+          name="fechaCreacion" 
+          #fechaCreacion="ngModel" 
+          readonly>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput 
+          placeholder="Usuario Creacion" 
+          [(ngModel)]="ocupacion.usuarioCreacion" 
+          name="usuarioCreacion" 
+          #usuarioCreacion="ngModel" 
+          readonly>
+      </mat-form-field>
+    </ng-container>
+  </div>
+  <div class="button-row">
+    <button type="button"
+      mat-mini-fab 
+      class="bg-success text-white" 
+      matTooltip="Guardar" 
+      [matDialogClose]="f.value">
+      <mat-icon>save</mat-icon>
+    </button>
+    <button type="button" 
+      mat-mini-fab 
+      class="bg-danger text-white" 
+      matTooltip="Cancelar" 
+      matDialogClose>
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
+</form>

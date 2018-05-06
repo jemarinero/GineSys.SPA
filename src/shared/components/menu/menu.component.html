@@ -1,11 +1,15 @@
 <accordion>
-  <accordion-group *ngFor="let menu of expandableMenu" heading="{{ menu.title }}" panelClass="border-secondary">
+  <accordion-group 
+    *ngFor="let menu of expandableMenu" 
+    heading="{{ menu.title }}"
+    panelClass="mb-1" 
+    >
     <div class="list-group">
       <a 
           *ngFor="let sm of menu.subMenus" 
           [routerLink]="sm.route"
           routerLinkActive="active"
-          class="list-group-item list-group-item-action"
+          class="list-group-item list-group-item-action p-1 pl-3"
           >
           {{ sm.title }}
       </a>

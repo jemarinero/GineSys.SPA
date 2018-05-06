@@ -11,3 +11,6 @@
 .info-box {
     height: 200px;
 }
+.gine-card {
+    border-radius: 0 !important;
+}
