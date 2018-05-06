@@ -8,6 +8,7 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
 import { RouterModule } from '@angular/router';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 import { UsuariosComponent } from '../admin/components/usuarios/usuarios.component';
 import { AseguradorasComponent } from '../core/components/aseguradoras/aseguradoras.component';
@@ -28,7 +29,11 @@ import { appRoutes } from './routes';
 import { MatPaginatorIntlCro } from '../shared/models/MatPaginatorIntlCro';
 import { OcupacionEditComponent } from '../core/components/ocupaciones/ocupacion-edit/ocupacion-edit.component';
 import { OcupacionNewComponent } from '../core/components/ocupaciones/ocupacion-new/ocupacion-new.component';
-import { DeleteDialogComponent } from '../admin/components/delete-dialog/delete-dialog.component';
+import { DeleteDialogComponent } from '../shared/components/delete-dialog/delete-dialog.component';
+import { DashboardComponent } from '../shared/components/dashboard/dashboard.component';
+import { ReligionEditComponent } from '../core/components/religiones/religion-edit/religion-edit.component';
+import { ReligionNewComponent } from '../core/components/religiones/religion-new/religion-new.component';
+import { ReligionesService } from '../core/services/religiones.service';
 
 
 @NgModule({
@@ -45,12 +50,17 @@ import { DeleteDialogComponent } from '../admin/components/delete-dialog/delete-
     AseguradorasComponent,
     OcupacionEditComponent,
     OcupacionNewComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    DashboardComponent,
+    ReligionEditComponent,
+    ReligionNewComponent
   ],
   entryComponents: [
     OcupacionEditComponent,
     OcupacionNewComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    ReligionEditComponent,
+    ReligionNewComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +81,7 @@ import { DeleteDialogComponent } from '../admin/components/delete-dialog/delete-
     MatDialogModule,
     BsDropdownModule.forRoot(),
     AccordionModule.forRoot(),
+    CollapseModule.forRoot(),
     HttpClientModule,
     AuthModule,
     RouterModule.forRoot(appRoutes)
@@ -80,6 +91,7 @@ import { DeleteDialogComponent } from '../admin/components/delete-dialog/delete-
     AuthGuard,
     AlertifyService,
     OcupacionesService,
+    ReligionesService,
     { provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro}
   ],
   bootstrap: [AppComponent]

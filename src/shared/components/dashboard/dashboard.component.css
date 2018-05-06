@@ -1,0 +1,39 @@
+.card {
+    background: #ffffff none repeat scroll 0 0;
+    margin: 15px 0;
+    padding: 20px;
+    border: 0 solid #e7e7e7;
+    border-radius: 5px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.media {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+}
+
+.media-body {
+    vertical-align: middle;
+  }
+.media-body span {
+    font-size: 10px;
+    color: #4680ff;
+}
+.media-body p {
+    color: #99abb4;
+    line-height: 15px;
+}
+
+.media-text-right {
+    text-align: right;
+}
+.media-text-left {
+    text-align: left;
+}
+.f-s-40 {
+    font-size: 40px!important;
+}

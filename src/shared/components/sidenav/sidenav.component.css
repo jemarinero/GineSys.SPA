@@ -4,8 +4,7 @@
 
 .menu-button {
     top: 15px;
-    position: absolute;
-    z-index: 99;
+    left: 20px;
 }
 
 .info-box {
@@ -13,4 +12,19 @@
 }
 .gine-card {
     border-radius: 0 !important;
+}
+
+.user-thumbnail {
+    position: relative; transform: translateY(-10%);
+}
+
+.user-thumbnail img {
+    width: 80px; 
+    border-radius: 50%; 
+    position: relative; 
+    border: 2px solid white;
+}
+
+.user-icon {
+    border-radius: 50%;
 }

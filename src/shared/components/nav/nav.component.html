@@ -1,36 +1,44 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-2">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary mb-2">
   <div class="container">
-      <a class="navbar-brand">
-        <img src="../../../assets/img/logo.png" alt="Logo">
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link"routerLink="/">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          
-        </ul>
-        <ul class="navbar-nav navbar-right">
-          <li class="nav-item dropdown" dropdown>
-            <a class="nav-link dropdown-toggle" (click)="false"
-              dropdownToggle
-            >
-              <i class="fa fa-user"></i> {{ getUser() }}
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown" *dropdownMenu>
-              <a class="dropdown-item" href="#"><i class="fa fa-unlock fa-danger"></i> Cambiar Contrasena</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" (click)="logout()"><i class="fa fa-times-circle fa-danger"></i> Salir</a>
-            </div>
-          </li>
-        </ul>
-      </div>
+    <a class="navbar-brand" [routerLink]="['/dashboard']" matTooltip="Dashboard" routerLinkActive="active">
+      <img src="../../../assets/img/logo.png" alt="Logo">
+    </a>
+    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" [collapse]="isCollapsed">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="/">Fecha Sistema:
+            <span class="badge badge-success">{{ systemDate | date:'dd/MM/yyyy' }}</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav navbar-right">
+        <li class="nav-item">
+          <a (click)="false" class="nav-link">
+            <span class="badge badge-warning">{{'Seguiente: ' + siguiente }}</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a (click)="false" class="nav-link">
+            <span class="badge badge-success">{{'En Consulta: ' + enConsulta }}</span>
+          </a>
+        </li>
+        <li class="nav-item dropdown active" dropdown>
+          <a class="nav-link dropdown-toggle" (click)="false" dropdownToggle>
+            <mat-icon class="bg-white text-success align-bottom user-icon text-center">verified_user</mat-icon> {{ getUser() }}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown" *dropdownMenu>
+            <a class="dropdown-item" href="#">
+              <mat-icon class="text-warning align-middle">lock_outline</mat-icon> Cambiar Contrasena</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" (click)="logout()">
+              <mat-icon class="text-danger align-middle">exit_to_app</mat-icon> Salir</a>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>

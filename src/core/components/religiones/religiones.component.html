@@ -1,3 +1,93 @@
 <div class="alert alert-secondary" role="alert">
-  Configuracion de Religiones
-</div>
+    <mat-icon class="align-middle text-primary">account_balance</mat-icon> Configuracion de Religiones
+</div><div class="page-container mat-elevation-z8">
+    <div class="table-header">
+      <button 
+        (click)="loadReligiones()"
+        mat-mini-fab 
+        class="bg-primary text-white"
+        matTooltip="Actualizar">
+        <mat-icon>refresh</mat-icon>
+      </button>
+      <button 
+        mat-mini-fab 
+        class="bg-primary text-white"
+        matTooltip="Agregar Nuevo"
+        (click)="newDialog()">
+        <mat-icon>add_circle_outline</mat-icon>
+      </button>
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar...">
+      </mat-form-field>
+    </div>
+  
+    <mat-table #table [dataSource]="dataSource">
+  
+      <!-- Position Column -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <a 
+              mat-icon-button 
+              class="text-warning"
+              (click)="editDialog(element)"
+              matTooltip="Modificar">
+              <mat-icon>edit</mat-icon>
+            </a>
+            <a 
+              mat-icon-button 
+              class="text-danger"
+              (click)="deleteDialog(element)"
+              routerLink="."
+              matTooltip="Borrar">
+              <mat-icon>delete</mat-icon>
+            </a>
+        </mat-cell>
+      </ng-container>
+  
+      <!-- Position Column -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Codigo </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="descripcion">
+        <mat-header-cell *matHeaderCellDef> Descripcion </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.descripcion}} </mat-cell>
+      </ng-container>
+  
+      <!-- Weight Column -->
+      <ng-container matColumnDef="fechaCreacion">
+        <mat-header-cell *matHeaderCellDef> Fecha Creacion </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.fechaCreacion | date: 'dd/MM/yyyy h:mma'}} </mat-cell>
+      </ng-container>
+  
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="fechaModificacion">
+        <mat-header-cell *matHeaderCellDef> Fecha Modificacion </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.fechaModificacion | date: 'dd/MM/yyyy h:mma'}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="usuarioCreacion">
+        <mat-header-cell *matHeaderCellDef> Usuario Creacion </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.usuarioCreacion}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="usuarioModificacion">
+        <mat-header-cell *matHeaderCellDef> Usuario Modificacion </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.usuarioModificacion}} </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  
+    <mat-paginator #paginator
+                   [pageSize]="10"
+                   [pageSizeOptions]="[5, 10, 20]"
+                   [showFirstLastButtons]="true"
+                   >
+    </mat-paginator>
+  </div>

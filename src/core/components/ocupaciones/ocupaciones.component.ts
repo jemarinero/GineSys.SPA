@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatDialog } from '@angular/material';
 import { OcupacionEditComponent } from './ocupacion-edit/ocupacion-edit.component';
-import { DeleteDialogComponent } from './../../../admin/components/delete-dialog/delete-dialog.component';
+import { DeleteDialogComponent } from '../../../shared/components/delete-dialog/delete-dialog.component';
 import { OcupacionNewComponent } from './ocupacion-new/ocupacion-new.component';
 import { AuthService } from './../../../shared/services/auth.service';
 
@@ -72,11 +72,13 @@ export class OcupacionesComponent implements OnInit, OnDestroy {
     })
     .afterClosed()
     .subscribe(res => {
-      let ocupacion = {
-        descripcion: res.descripcion,
-        usuarioCreacion: this.authService.decodedToken.unique_name
+      if(res) {
+        let ocupacion = {
+          descripcion: res.descripcion,
+          usuarioCreacion: this.authService.decodedToken.unique_name
+        }
+        this.create(<Ocupacion>ocupacion);
       }
-      this.create(<Ocupacion>ocupacion);
     });
   }
 
@@ -87,8 +89,10 @@ export class OcupacionesComponent implements OnInit, OnDestroy {
     })
     .afterClosed()
     .subscribe(ocupacion => {
+      if(ocupacion) {
         ocupacion.usuarioModificacion = this.authService.decodedToken.unique_name;
         this.update(ocupacion);
+      }
     });
   }
 

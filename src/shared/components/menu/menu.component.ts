@@ -29,15 +29,18 @@ export class MenuComponent implements OnInit {
         subMenus: [
           {
             title: 'Ocupaciones',
-            route: '/ocupaciones'
+            route: '/ocupaciones',
+            icon: 'work'
           },
           {
             title: 'Religiones',
-            route: '/religiones'
+            route: '/religiones',
+            icon: 'account_balance'
           },
           {
             title: 'Aseguradoras',
-            route: '/aseguradoras'
+            route: '/aseguradoras',
+            icon: 'security'
           }
         ]
       },
@@ -46,7 +49,8 @@ export class MenuComponent implements OnInit {
         subMenus: [
           {
             title: 'Usuarios',
-            route: '/usuarios'
+            route: '/usuarios',
+            icon: 'people'
           }
         ]
       }

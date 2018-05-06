@@ -1,43 +1,19 @@
-
 <mat-drawer-container fullscreen>
   <mat-drawer class="gine-drawer" #drawer mode="push">
-    <!-- <div class="gine-card card text-white bg-info mb-0" style="max-width: 20rem;">
-      <div class="card-header" >Informacion de Usuario</div>
-      <div class="card-body p-2">
-        <table>
-          <tr>
-            <td><p class="card-text">Usuario:</p></td>
-            <td><span class="badge badge-secondary">{{ infoUsuario?.unique_name }}</span></td>
-          </tr>
-          <tr>
-            <td><p class="card-text mb-0">Nombre:</p></td>
-            <td><span class="badge badge-secondary">{{ infoUsuario?.nombreUsuario }}</span></td>
-          </tr>
-          <tr>
-            <td><p class="card-text mb-0">Es Doctor: </p>        </td>
-            <td><span class="badge badge-secondary">{{ infoUsuario?.isDoctor == 'True' ? 'Si' : 'No' }}</span></td>
-          </tr>
-          <tr>
-            <td><p class="card-text mb-0">Es Administrador:  </p></td>
-            <td><span class="badge badge-secondary">{{ infoUsuario?.isAdmin == 'True' ? 'Si' : 'No' }}</span></td>
-          </tr>
-        </table>
-      </div>
-    </div> -->
     <div class="gine-card card bg-info">
       <div class="card-header text-center mb-4" style="height: 50px;">
-        <div style="position: relative; transform: translateY(-10%);">
-            <img class="card-img-top" src="https://randomuser.me/api/portraits/men/57.jpg" style="width: 80px; border-radius: 50%; position: relative; border: 2px solid white;">
+        <div class="user-thumbnail">
+            <img class="card-img-top" src="{{ infoUsuario?.photoUrl }}">
         </div>
       </div>
       <div class="card-body text-white p-2">
-        <h5 class="card-title text-center"><i class="fa fa-user"></i> {{ infoUsuario?.nombreUsuario }}</h5>
-        <p class="card-text mb-0" *ngIf="infoUsuario?.isDoctor">Role: Administrador</p>
-        <p class="card-text mb-0" *ngIf="infoUsuario?.isAdmin">Role: Doctor</p>
+        <h5 class="card-title text-center"><mat-icon class="bg-white text-success align-bottom user-icon text-center">person</mat-icon> {{ infoUsuario?.nombreUsuario }}</h5>
+        <p class="card-text mb-0" *ngIf="infoUsuario?.isDoctor == 'True'">Role: Doctor</p>
+        <p class="card-text mb-0" *ngIf="infoUsuario?.isAdmin == 'True'">Role: Administrador</p>
       </div>
     </div>
     <app-menu></app-menu>
   </mat-drawer>
   <ng-content></ng-content>
-  <button type="button" class="btn btn-sm btn-info menu-button" (click)="drawer.toggle()"><i class="fa fa-bars"></i></button>
+  <button type="button" class="btn btn-sm btn-info fixed-top menu-button" (click)="drawer.toggle()"><i class="fa fa-bars"></i></button>
 </mat-drawer-container>
