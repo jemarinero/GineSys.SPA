@@ -34,6 +34,9 @@ import { DashboardComponent } from '../shared/components/dashboard/dashboard.com
 import { ReligionEditComponent } from '../core/components/religiones/religion-edit/religion-edit.component';
 import { ReligionNewComponent } from '../core/components/religiones/religion-new/religion-new.component';
 import { ReligionesService } from '../core/services/religiones.service';
+import { AseguradorasService } from '../core/services/aseguradoras.service';
+import { AseguradoraEditComponent } from '../core/components/aseguradoras/aseguradora-edit/aseguradora-edit.component';
+import { AseguradoraNewComponent } from '../core/components/aseguradoras/aseguradora-new/aseguradora-new.component';
 
 
 @NgModule({
@@ -53,17 +56,21 @@ import { ReligionesService } from '../core/services/religiones.service';
     DeleteDialogComponent,
     DashboardComponent,
     ReligionEditComponent,
-    ReligionNewComponent
+    ReligionNewComponent,
+    AseguradoraEditComponent,
+    AseguradoraNewComponent
   ],
   entryComponents: [
     OcupacionEditComponent,
     OcupacionNewComponent,
     DeleteDialogComponent,
     ReligionEditComponent,
-    ReligionNewComponent
+    ReligionNewComponent,
+    AseguradoraEditComponent,
+    AseguradoraNewComponent
   ],
   imports: [
-    BrowserModule,
+  BrowserModule,
     BrowserAnimationsModule,
     NoopAnimationsModule,
     HttpModule,
@@ -92,6 +99,7 @@ import { ReligionesService } from '../core/services/religiones.service';
     AlertifyService,
     OcupacionesService,
     ReligionesService,
+    AseguradorasService,
     { provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro}
   ],
   bootstrap: [AppComponent]

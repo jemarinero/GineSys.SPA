@@ -1,0 +1,43 @@
+.mat-row, .mat-header-row {
+    min-width: 1940px !important;
+}
+
+.mat-header-row { 
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 1;
+    background-color: inherit;
+}
+
+.mat-table { 
+    overflow: scroll !important;
+}
+
+.mat-column-telefonoFijo {
+    flex: 0 0 100px !important;
+}
+
+.mat-column-telefonoMovil {
+    flex: 0 0 100px !important;
+}
+
+.mat-column-fax {
+    flex: 0 0 100px !important;
+}
+
+.mat-column-correo {
+    flex: 0 0 210px !important;
+}
+
+.mat-column-contacto {
+    flex: 0 0 120px !important;
+}
+
+.mat-column-nombre {
+    flex: 0 0 250px !important;
+}
+
+.mat-column-direccion {
+    flex: 0 0 350px !important;
+}

@@ -63,3 +63,38 @@ input:-moz-read-only { /* For Firefox */
 input:read-only { 
   color: #c2c2c2;
 }
+
+.table-header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+}
+
+.mat-column-actions {
+  flex: 0 0 100px !important;
+}
+
+.mat-column-id {
+  flex: 0 0 70px !important;
+}
+
+.mat-column-usuarioCreacion {
+  flex: 0 0 120px !important;
+}
+
+.mat-column-usuarioModificacion {
+  flex: 0 0 120px !important;
+}
+
+.mat-column-fechaCreacion {
+  flex: 0 0 150px !important;
+}
+
+.mat-column-fechaModificacion {
+  flex: 0 0 150px !important;
+}
+
+.mat-column-descripcion {
+  min-width: 200px;
+  flex-basis: auto; /* default value */
+  flex-grow: 1;
+}
