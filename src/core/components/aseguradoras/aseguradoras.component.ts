@@ -78,13 +78,10 @@ export class AseguradorasComponent implements OnInit {
       width: '500px'
     })
     .afterClosed()
-    .subscribe(res => {
-      if(res) {
-        let aseguradora = {
-          nombre: res.nombre,
-          usuarioCreacion: this.authService.decodedToken.unique_name
-        }
-        this.create(<Aseguradora>aseguradora);
+    .subscribe(aseguradora => {
+      if(aseguradora) {
+        aseguradora.usuarioCreacion = this.authService.decodedToken.unique_name
+        this.create(aseguradora);
       }
     });
   }

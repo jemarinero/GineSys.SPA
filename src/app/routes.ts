@@ -7,6 +7,7 @@ import { OcupacionesComponent } from '../core/components/ocupaciones/ocupaciones
 import { ReligionesComponent } from './../core/components/religiones/religiones.component';
 import { AseguradorasComponent } from './../core/components/aseguradoras/aseguradoras.component';
 import { DashboardComponent } from '../shared/components/dashboard/dashboard.component';
+import { GruposSanguineosComponent } from '../core/components/grupos-sanguineos/grupos-sanguineos.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -21,6 +22,7 @@ export const appRoutes: Routes = [
                     { path: 'ocupaciones', component: OcupacionesComponent},
                     { path: 'religiones', component: ReligionesComponent},
                     { path: 'aseguradoras', component: AseguradorasComponent},
+                    { path: 'grpsanguineos', component: GruposSanguineosComponent},
                     { path: 'dashboard', component: DashboardComponent}
                 ]
             }

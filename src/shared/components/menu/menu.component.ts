@@ -42,6 +42,12 @@ export class MenuComponent implements OnInit {
             route: '/aseguradoras',
             icon: 'security'
           }
+          ,
+          {
+            title: 'Grupos Sanguineos',
+            route: '/grpsanguineos',
+            icon: 'blur_on'
+          }
         ]
       },
       { 

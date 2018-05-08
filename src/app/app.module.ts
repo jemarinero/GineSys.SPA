@@ -37,6 +37,10 @@ import { ReligionesService } from '../core/services/religiones.service';
 import { AseguradorasService } from '../core/services/aseguradoras.service';
 import { AseguradoraEditComponent } from '../core/components/aseguradoras/aseguradora-edit/aseguradora-edit.component';
 import { AseguradoraNewComponent } from '../core/components/aseguradoras/aseguradora-new/aseguradora-new.component';
+import { GrupoSanguineoEditComponent } from '../core/components/grupos-sanguineos/grupo-sanguineo-edit/grupo-sanguineo-edit.component';
+import { GrupoSanguineoNewComponent } from '../core/components/grupos-sanguineos/grupo-sanguineo-new/grupo-sanguineo-new.component';
+import { GruposSanguineosComponent } from '../core/components/grupos-sanguineos/grupos-sanguineos.component';
+import { GruposSanguineosService } from '../core/services/grupos-sanguineos.service';
 
 
 @NgModule({
@@ -58,7 +62,10 @@ import { AseguradoraNewComponent } from '../core/components/aseguradoras/asegura
     ReligionEditComponent,
     ReligionNewComponent,
     AseguradoraEditComponent,
-    AseguradoraNewComponent
+    AseguradoraNewComponent,
+    GruposSanguineosComponent,
+    GrupoSanguineoEditComponent,
+    GrupoSanguineoNewComponent
   ],
   entryComponents: [
     OcupacionEditComponent,
@@ -67,7 +74,9 @@ import { AseguradoraNewComponent } from '../core/components/aseguradoras/asegura
     ReligionEditComponent,
     ReligionNewComponent,
     AseguradoraEditComponent,
-    AseguradoraNewComponent
+    AseguradoraNewComponent,
+    GrupoSanguineoEditComponent,
+    GrupoSanguineoNewComponent
   ],
   imports: [
   BrowserModule,
@@ -100,6 +109,7 @@ import { AseguradoraNewComponent } from '../core/components/aseguradoras/asegura
     OcupacionesService,
     ReligionesService,
     AseguradorasService,
+    GruposSanguineosService,
     { provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro}
   ],
   bootstrap: [AppComponent]

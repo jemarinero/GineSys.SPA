@@ -26,8 +26,6 @@
         </mat-form-field>
       </div>
     </div>
-
-
     <div class="row">
       <div class="col-4">
         <mat-form-field>
@@ -61,7 +59,7 @@
     </div>
   </div>
   <div class="button-row">
-    <button type="button" mat-mini-fab class="bg-success text-white" matTooltip="Guardar" [matDialogClose]="f.value">
+    <button type="button" mat-mini-fab class="bg-success text-white" matTooltip="Guardar" [matDialogClose]="f.value" [disabled]="!f.valid">
       <mat-icon>save</mat-icon>
     </button>
     <button type="button" mat-mini-fab class="bg-danger text-white" matTooltip="Cancelar" matDialogClose>
