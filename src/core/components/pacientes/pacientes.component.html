@@ -1,0 +1,105 @@
+<div class="alert alert-secondary" role="alert">
+  <mat-icon class="align-middle text-primary">blur_on</mat-icon> Configuracion de Grupos Sanguineos
+</div>
+<div class="page-container mat-elevation-z8">
+<div class="table-header">
+  <button 
+    (click)="loadData()"
+    mat-mini-fab 
+    class="bg-primary text-white"
+    matTooltip="Actualizar">
+    <mat-icon>refresh</mat-icon>
+  </button>
+  <a 
+    mat-mini-fab 
+    class="bg-primary text-white"
+    matTooltip="Agregar Nuevo"
+    [routerLink]="['/pacientes/nuevo']">
+    <mat-icon>add_circle_outline</mat-icon>
+  </a>
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar...">
+  </mat-form-field>
+</div>
+
+<mat-table #table [dataSource]="dataSource">
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+        <a 
+          mat-icon-button 
+          class="text-warning"
+          (click)="editDialog(element)"
+          matTooltip="Modificar">
+          <mat-icon>edit</mat-icon>
+        </a>
+        <a 
+          mat-icon-button 
+          class="text-danger"
+          (click)="deleteDialog(element)"
+          routerLink="."
+          matTooltip="Borrar">
+          <mat-icon>delete</mat-icon>
+        </a>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef> Codigo </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="nombre">
+    <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="direccion">
+    <mat-header-cell *matHeaderCellDef> Direccion </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.direccion}} </mat-cell>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="fechaNacimiento">
+    <mat-header-cell *matHeaderCellDef> Fecha Nacimiento </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.fechaNacimiento | date: 'dd/MM/yyyy'}} </mat-cell>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="edad">
+    <mat-header-cell *matHeaderCellDef> Edad </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.edad}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="telefono">
+    <mat-header-cell *matHeaderCellDef> Telefono </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.telefono}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="correo">
+    <mat-header-cell *matHeaderCellDef> Correo </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.correo}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="estado">
+    <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
+    <mat-cell *matCellDef="let element"><mat-icon [class.text-primary]="element.estado">{{element.estado ? 'check_box' : 'check_box_outline_blank' }}</mat-icon></mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+<mat-paginator #paginator
+               [pageSize]="10"
+               [pageSizeOptions]="[5, 10, 20]"
+               [showFirstLastButtons]="true"
+               >
+</mat-paginator>
+</div>

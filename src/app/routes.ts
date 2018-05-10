@@ -8,6 +8,9 @@ import { ReligionesComponent } from './../core/components/religiones/religiones.
 import { AseguradorasComponent } from './../core/components/aseguradoras/aseguradoras.component';
 import { DashboardComponent } from '../shared/components/dashboard/dashboard.component';
 import { GruposSanguineosComponent } from '../core/components/grupos-sanguineos/grupos-sanguineos.component';
+import { PacientesComponent } from './../core/components/pacientes/pacientes.component';
+import { PacienteNewComponent } from './../core/components/pacientes/paciente-new/paciente-new.component';
+import { PacienteInfoComponent } from '../core/components/pacientes/paciente-info/paciente-info.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -23,6 +26,8 @@ export const appRoutes: Routes = [
                     { path: 'religiones', component: ReligionesComponent},
                     { path: 'aseguradoras', component: AseguradorasComponent},
                     { path: 'grpsanguineos', component: GruposSanguineosComponent},
+                    { path: 'pacientes/nuevo', component: PacienteNewComponent},
+                    { path: 'pacientes', component: PacientesComponent},
                     { path: 'dashboard', component: DashboardComponent}
                 ]
             }

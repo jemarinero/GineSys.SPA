@@ -1,0 +1,33 @@
+<div class="alert alert-secondary" role="alert">
+  Nuevo Paciente
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <div class="card" style="width: 18rem;">
+      <img class="card-img-top align-self-center" src="../../../../assets/img/silueta.jpg">
+      <div class="card-body">
+        <h5 class="card-title" *ngIf="nombre">{{ nombre }}</h5>
+        <p class="card-text">Fecha Nacimiento:</p>
+      </div>
+      <div class="list-group">
+        <a [routerLink]=""
+           routerLinkActive="active"
+           class="list-group-item list-group-item-action p-1 pl-3">
+           Info. General
+        </a>
+        <a [routerLink]=""
+           routerLinkActive=""
+           class="list-group-item list-group-item-action p-1 pl-3">Antec. Gine-Obst.</a>
+        <a [routerLink]=""
+           routerLinkActive=""
+           class="list-group-item list-group-item-action p-1 pl-3">Antec. Paciente</a>
+        <a [routerLink]=""
+           routerLinkActive=""
+           class="list-group-item list-group-item-action p-1 pl-3">Vacunas Vigentes</a>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <app-paciente-info></app-paciente-info>
+  </div>
+</div>

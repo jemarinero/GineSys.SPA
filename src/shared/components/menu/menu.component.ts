@@ -28,6 +28,11 @@ export class MenuComponent implements OnInit {
         title: 'Config. General',
         subMenus: [
           {
+            title: 'Pacientes',
+            route: '/pacientes',
+            icon: 'people'
+          },
+          {
             title: 'Ocupaciones',
             route: '/ocupaciones',
             icon: 'work'
@@ -41,8 +46,7 @@ export class MenuComponent implements OnInit {
             title: 'Aseguradoras',
             route: '/aseguradoras',
             icon: 'security'
-          }
-          ,
+          },
           {
             title: 'Grupos Sanguineos',
             route: '/grpsanguineos',

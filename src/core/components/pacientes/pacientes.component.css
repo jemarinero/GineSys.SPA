@@ -1,0 +1,42 @@
+.mat-row, .mat-header-row {
+    min-width: 1130px !important;
+}
+
+.mat-header-row { 
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 1;
+    background-color: inherit;
+}
+
+.mat-table { 
+    overflow: scroll !important;
+}
+
+.mat-column-nombre {
+    flex: 0 0 250px !important;
+}
+
+.mat-column-direccion {
+    flex: 0 0 350px !important;
+}
+
+.mat-column-correo {
+    flex: 0 0 210px !important;
+}
+
+.mat-column-fechaNacimiento {
+    flex: 0 0 150px !important;
+    text-align: center !important;
+}
+
+.mat-column-edad, .mat-column-estado {
+    flex: 0 0 70px !important;
+    text-align: center !important;
+    
+}
+
+.mat-column-telefono {
+    flex: 0 0 100px !important;
+}

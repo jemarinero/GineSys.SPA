@@ -41,6 +41,10 @@ import { GrupoSanguineoEditComponent } from '../core/components/grupos-sanguineo
 import { GrupoSanguineoNewComponent } from '../core/components/grupos-sanguineos/grupo-sanguineo-new/grupo-sanguineo-new.component';
 import { GruposSanguineosComponent } from '../core/components/grupos-sanguineos/grupos-sanguineos.component';
 import { GruposSanguineosService } from '../core/services/grupos-sanguineos.service';
+import { PacientesService } from '../core/services/pacientes.service';
+import { PacientesComponent } from '../core/components/pacientes/pacientes.component';
+import { PacienteNewComponent } from '../core/components/pacientes/paciente-new/paciente-new.component';
+import { PacienteInfoComponent } from '../core/components/pacientes/paciente-info/paciente-info.component';
 
 
 @NgModule({
@@ -65,7 +69,10 @@ import { GruposSanguineosService } from '../core/services/grupos-sanguineos.serv
     AseguradoraNewComponent,
     GruposSanguineosComponent,
     GrupoSanguineoEditComponent,
-    GrupoSanguineoNewComponent
+    GrupoSanguineoNewComponent,
+    PacientesComponent,
+    PacienteNewComponent,
+    PacienteInfoComponent
   ],
   entryComponents: [
     OcupacionEditComponent,
@@ -110,6 +117,7 @@ import { GruposSanguineosService } from '../core/services/grupos-sanguineos.serv
     ReligionesService,
     AseguradorasService,
     GruposSanguineosService,
+    PacientesService,
     { provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro}
   ],
   bootstrap: [AppComponent]
