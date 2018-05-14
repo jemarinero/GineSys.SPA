@@ -9,8 +9,8 @@ import { AseguradorasComponent } from './../core/components/aseguradoras/asegura
 import { DashboardComponent } from '../shared/components/dashboard/dashboard.component';
 import { GruposSanguineosComponent } from '../core/components/grupos-sanguineos/grupos-sanguineos.component';
 import { PacientesComponent } from './../core/components/pacientes/pacientes.component';
-import { PacienteNewComponent } from './../core/components/pacientes/paciente-new/paciente-new.component';
-import { PacienteInfoComponent } from '../core/components/pacientes/paciente-info/paciente-info.component';
+import { PacienteDetailsComponent } from './../core/components/pacientes/paciente-details/paciente-details.component';
+import { PacienteDetailResolver } from '../core/resolvers/paciente-detail.resolver';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -26,8 +26,8 @@ export const appRoutes: Routes = [
                     { path: 'religiones', component: ReligionesComponent},
                     { path: 'aseguradoras', component: AseguradorasComponent},
                     { path: 'grpsanguineos', component: GruposSanguineosComponent},
-                    { path: 'pacientes/nuevo', component: PacienteNewComponent},
                     { path: 'pacientes', component: PacientesComponent},
+                    { path: 'pacientes/:id', component: PacienteDetailsComponent, resolve: {paciente: PacienteDetailResolver}},
                     { path: 'dashboard', component: DashboardComponent}
                 ]
             }

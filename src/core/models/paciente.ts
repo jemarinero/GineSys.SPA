@@ -1,4 +1,6 @@
-export interface Paciente {
+import * as moment from 'moment';
+
+export class Paciente {
     id: number;
     nombre: string;
     direccion: string;
@@ -7,4 +9,11 @@ export interface Paciente {
     telefono: string;
     correo: string;
     estado: boolean;
+    meses: number;
+    dias: number;
+    hasSeguroMedico: boolean;
+
+    constructor(init?: Partial<Paciente>) {
+        Object.assign(this,init);
+    }
 }

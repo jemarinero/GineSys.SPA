@@ -1,10 +1,10 @@
 <div class="alert alert-secondary" role="alert">
-  <mat-icon class="align-middle text-primary">blur_on</mat-icon> Configuracion de Grupos Sanguineos
+  <mat-icon class="align-middle text-primary">blur_on</mat-icon> Configuracion de Pacientes
 </div>
 <div class="page-container mat-elevation-z8">
 <div class="table-header">
   <button 
-    (click)="loadData()"
+    (click)="initTable()"
     mat-mini-fab 
     class="bg-primary text-white"
     matTooltip="Actualizar">
@@ -14,7 +14,7 @@
     mat-mini-fab 
     class="bg-primary text-white"
     matTooltip="Agregar Nuevo"
-    [routerLink]="['/pacientes/nuevo']">
+    [routerLink]="['/pacientes/0']">
     <mat-icon>add_circle_outline</mat-icon>
   </a>
   <mat-form-field>
@@ -32,7 +32,7 @@
         <a 
           mat-icon-button 
           class="text-warning"
-          (click)="editDialog(element)"
+          [routerLink]="['/pacientes/',element.id]"
           matTooltip="Modificar">
           <mat-icon>edit</mat-icon>
         </a>

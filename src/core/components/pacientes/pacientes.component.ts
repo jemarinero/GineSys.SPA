@@ -67,21 +67,6 @@ export class PacientesComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  newDialog() {
-    // this.dialog.open(GrupoSanguineoNewComponent, {
-    //   width: '500px'
-    // })
-    // .afterClosed()
-    // .subscribe(res => {
-    //   if(res) {
-    //     let data = {
-    //       descripcion: res.descripcion,
-    //       usuarioCreacion: this.authService.decodedToken.unique_name
-    //     }
-    //     this.create(<Paciente>data);
-    //   }
-    // });
-  }
 
   editDialog(data) {
     // this.dialog.open(GrupoSanguineoEditComponent, {

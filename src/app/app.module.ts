@@ -2,13 +2,31 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { MatButtonModule, MatExpansionModule, MatIconModule, MatListModule, MatSidenavModule, MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatTooltipModule, MatDialogModule, MatPaginatorIntl } from '@angular/material';
+import { 
+  MatButtonModule, 
+  MatExpansionModule, 
+  MatIconModule, 
+  MatListModule, 
+  MatSidenavModule, 
+  MatTableModule, 
+  MatFormFieldModule, 
+  MatInputModule, 
+  MatPaginatorModule, 
+  MatTooltipModule, 
+  MatDialogModule, 
+  MatNativeDateModule,
+  MatPaginatorIntl, 
+  MAT_DATE_LOCALE,
+  MatSelectModule,
+  MatRadioModule} from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import * as moment from 'moment';
 
 import { UsuariosComponent } from '../admin/components/usuarios/usuarios.component';
 import { AseguradorasComponent } from '../core/components/aseguradoras/aseguradoras.component';
@@ -27,6 +45,7 @@ import { AuthService } from '../shared/services/auth.service';
 import { AppComponent } from './app.component';
 import { appRoutes } from './routes';
 import { MatPaginatorIntlCro } from '../shared/models/MatPaginatorIntlCro';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { OcupacionEditComponent } from '../core/components/ocupaciones/ocupacion-edit/ocupacion-edit.component';
 import { OcupacionNewComponent } from '../core/components/ocupaciones/ocupacion-new/ocupacion-new.component';
 import { DeleteDialogComponent } from '../shared/components/delete-dialog/delete-dialog.component';
@@ -43,8 +62,9 @@ import { GruposSanguineosComponent } from '../core/components/grupos-sanguineos/
 import { GruposSanguineosService } from '../core/services/grupos-sanguineos.service';
 import { PacientesService } from '../core/services/pacientes.service';
 import { PacientesComponent } from '../core/components/pacientes/pacientes.component';
-import { PacienteNewComponent } from '../core/components/pacientes/paciente-new/paciente-new.component';
-import { PacienteInfoComponent } from '../core/components/pacientes/paciente-info/paciente-info.component';
+import { PacienteDetailsComponent } from '../core/components/pacientes/paciente-details/paciente-details.component';
+import { PacienteDetailResolver } from '../core/resolvers/paciente-detail.resolver';
+import { FechaTrabajoService } from '../shared/services/fecha-trabajo.service';
 
 
 @NgModule({
@@ -71,8 +91,7 @@ import { PacienteInfoComponent } from '../core/components/pacientes/paciente-inf
     GrupoSanguineoEditComponent,
     GrupoSanguineoNewComponent,
     PacientesComponent,
-    PacienteNewComponent,
-    PacienteInfoComponent
+    PacienteDetailsComponent
   ],
   entryComponents: [
     OcupacionEditComponent,
@@ -102,6 +121,11 @@ import { PacienteInfoComponent } from '../core/components/pacientes/paciente-inf
     MatPaginatorModule,
     MatTooltipModule,
     MatDialogModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatRadioModule,
+    MatSelectModule,
+    TabsModule.forRoot(),
     BsDropdownModule.forRoot(),
     AccordionModule.forRoot(),
     CollapseModule.forRoot(),
@@ -117,8 +141,11 @@ import { PacienteInfoComponent } from '../core/components/pacientes/paciente-inf
     ReligionesService,
     AseguradorasService,
     GruposSanguineosService,
+    PacienteDetailResolver,
     PacientesService,
-    { provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro}
+    FechaTrabajoService,
+    { provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro},
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' }
   ],
   bootstrap: [AppComponent]
 })

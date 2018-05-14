@@ -15,7 +15,7 @@ export class DataService {
       .catch(this.handleError);
   }
 
-  getOcupacion(id) {
+  getOne(id) {
     return this.http.get(this.url + '/' + id)
         .map(response => response)
         .catch(this.handleError);
