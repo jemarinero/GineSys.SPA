@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { PacientesService } from '../../../services/pacientes.service';
 import { AlertifyService } from '../../../../shared/services/alertify.service';
 import { ActivatedRoute } from '@angular/router';
@@ -6,7 +6,6 @@ import { Paciente } from '../../../models/paciente';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Observable } from 'rxjs/Observable';
 import * as moment from 'moment';
-import { EstadoCivil } from './../../../models/estado-civil';
 import { SiNo } from '../../../models/si-no';
 import { Aseguradora } from '../../../models/aseguradora';
 import { AseguradorasService } from '../../../services/aseguradoras.service';
@@ -16,22 +15,27 @@ import { Religion } from './../../../models/religion';
 import { GrupoSanguineo } from '../../../models/grupo-sanguineo';
 import { ReligionesService } from '../../../services/religiones.service';
 import { GruposSanguineosService } from '../../../services/grupos-sanguineos.service';
-import { FechaTrabajoService } from './../../../../shared/services/fecha-trabajo.service';
+import { ISubscription } from 'rxjs/Subscription';
+import { DomSanitizer } from '@angular/platform-browser';
+import { TerminoUltimoEmbarazo, EstadoCivil } from '../../../models/constantes';
 
 @Component({
   selector: 'app-paciente-details',
   templateUrl: './paciente-details.component.html',
-  styleUrls: ['./paciente-details.component.css']
+  styleUrls: ['./paciente-details.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class PacienteDetailsComponent implements OnInit {
+export class PacienteDetailsComponent implements OnInit, OnDestroy {
   paciente: Paciente;
   isNew: boolean = false;
-  estadoCivil = EstadoCivil;
+  estadosCiviles = EstadoCivil;
+  terminosUltEmbarazo = TerminoUltimoEmbarazo;
   siNo = SiNo;
-  aseguradoras: Aseguradora[];
-  ocupaciones: Ocupacion[];
-  religiones: Religion[];
-  gruposSanguineos: GrupoSanguineo[];
+  aseguradoras: Observable<Aseguradora[]>;
+  ocupaciones: Observable<Ocupacion[]>;
+  religiones: Observable<Religion[]>;
+  gruposSanguineos: Observable<GrupoSanguineo[]>;
+  subcription: ISubscription;
 
   constructor(private pacService: PacientesService, 
     private alertify: AlertifyService, 
@@ -40,7 +44,7 @@ export class PacienteDetailsComponent implements OnInit {
     private ocupService: OcupacionesService,
     private religionService: ReligionesService,
     private gsService: GruposSanguineosService,
-    private ftService: FechaTrabajoService) { 
+    private sanitizer: DomSanitizer) { 
     }
 
   async ngOnInit() {
@@ -48,8 +52,9 @@ export class PacienteDetailsComponent implements OnInit {
     this.getOcupaciones();
     this.getReligiones();
     this.getGruposSanguineos();
-    this.route.data.subscribe(data => {
+    this.subcription = this.route.data.subscribe(data => {
       this.paciente = data['paciente'];
+      this.paciente.foto = 'data:image/png;base64, '+this.paciente.foto;
         
       if(!this.paciente)
         this.isNew = true;
@@ -57,9 +62,13 @@ export class PacienteDetailsComponent implements OnInit {
     });
     this.updateEdad();
   }
+
+  ngOnDestroy() {
+    this.subcription.unsubscribe();
+  }
+
   dateChanged(event: MatDatepickerInputEvent<Date>) {
     this.updateEdad();
-    this.ftService.fechaTrabajo.next(this.paciente.fechaNacimiento);
   }
 
   
@@ -80,34 +89,22 @@ export class PacienteDetailsComponent implements OnInit {
   }
 
   getAseguradoras() {
-    this.asegService.getAll().subscribe((data: Aseguradora[]) => {
-      this.aseguradoras = data;
-    }, error => {
-      this.alertify.error('Ocurrio un error al obtener aseguradoras.');
-    });
+    this.aseguradoras = this.asegService.getAll();
   }
 
   getOcupaciones() {
-    this.ocupService.getAll().subscribe((data: Ocupacion[]) => {
-      this.ocupaciones = data;
-    }, error => {
-      this.alertify.error('Ocurrio un error al obtener ocupaciones.');
-    });
+    this.ocupaciones = this.ocupService.getAll();
   }
 
   getReligiones() {
-    this.religionService.getAll().subscribe((data: Religion[]) => {
-      this.religiones = data;
-    }, error => {
-      this.alertify.error('Ocurrio un error al obtener religiones.');
-    });
+    this.religiones = this.religionService.getAll()
   }
 
   getGruposSanguineos() {
-    this.gsService.getAll().subscribe((data: GrupoSanguineo[]) => {
-      this.gruposSanguineos = data;
-    }, error => {
-      this.alertify.error('Ocurrio un error al obtener grupos sanguineos.');
-    });
+    this.gruposSanguineos = this.gsService.getAll();
+  }
+
+  photoUrl() {
+    return this.sanitizer.bypassSecurityTrustUrl(this.paciente.foto);
   }
 }

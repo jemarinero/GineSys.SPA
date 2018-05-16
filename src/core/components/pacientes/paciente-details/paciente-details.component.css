@@ -5,9 +5,9 @@
     padding: 10px !important;
 }
 .profile-image {
-    margin: 25px;
-    width: 85%;
-    height: 85%;
+    width: 120px;
+    height: 120px;
+    background-size: cover;
 }
 
 .panel-body {
@@ -25,3 +25,4 @@
 .btn-group-justified>.btn-group .btn {
     width: 95%;
 }
+

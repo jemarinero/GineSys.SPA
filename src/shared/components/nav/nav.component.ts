@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { AlertifyService } from './../../services/alertify.service';
-import { FechaTrabajoService } from './../../services/fecha-trabajo.service';
+import { NavService } from '../../services/nav.service';
 
 @Component({
   selector: 'app-nav',
@@ -18,8 +18,8 @@ export class NavComponent implements OnInit {
   constructor(private authService: AuthService,
     private router: Router,
     private alertify: AlertifyService,
-    private ftService: FechaTrabajoService) {
-      this.ftService.fechaTrabajo.subscribe(fecha => {
+    private navService: NavService) {
+      this.navService.fechaTrabajo.subscribe(fecha => {
         this.systemDate = fecha;
       });
       
@@ -28,7 +28,7 @@ export class NavComponent implements OnInit {
    ngOnInit() {
      this.enConsulta = 'nombre del paciente en consulta'
      this.siguiente = 'nombre del siguiente paciente'
-     this.ftService.fechaTrabajo.next(new Date(2018,5,1));
+     this.navService.fechaTrabajo.next(new Date(2018,5,1));
    }
 
   getUser() {

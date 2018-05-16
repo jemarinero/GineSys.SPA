@@ -3,7 +3,7 @@ import { Subject } from 'rxjs/Subject';
 import 'rxjs/Rx';
 
 @Injectable()
-export class FechaTrabajoService {
+export class NavService {
     public fechaTrabajo : Subject<Date> = new Subject();
     
 }

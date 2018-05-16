@@ -64,7 +64,7 @@ import { PacientesService } from '../core/services/pacientes.service';
 import { PacientesComponent } from '../core/components/pacientes/pacientes.component';
 import { PacienteDetailsComponent } from '../core/components/pacientes/paciente-details/paciente-details.component';
 import { PacienteDetailResolver } from '../core/resolvers/paciente-detail.resolver';
-import { FechaTrabajoService } from '../shared/services/fecha-trabajo.service';
+import { NavService } from '../shared/services/nav.service';
 
 
 @NgModule({
@@ -143,7 +143,7 @@ import { FechaTrabajoService } from '../shared/services/fecha-trabajo.service';
     GruposSanguineosService,
     PacienteDetailResolver,
     PacientesService,
-    FechaTrabajoService,
+    NavService,
     { provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro},
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES' }
   ],

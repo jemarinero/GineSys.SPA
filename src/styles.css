@@ -143,3 +143,7 @@ input:read-only {
   border-top: 1px solid #eee;
   padding: 10px;
 }
+
+.select-panel-bg .mat-select-content {
+  background: rgba(224, 224, 224,0.5);
+}

@@ -1,39 +1,44 @@
-
 <div class="row">
   <div class="col-sm-3">
-    <div class="position-fixed">
-    <div class="alert" [class.alert-info]="isNew" [class.alert-warning]="!isNew" role="alert">
-      <mat-icon class="align-middle text-primary">person_outline</mat-icon> Configuracion de Pacientes
-    </div>
-    <div class="panel panel-default">
-      <img *ngIf="paciente?.image" src="" alt="{{paciente?.nombre}}" class="profile-image thumbnail">
-      <div class="panel-body">
-        <div>
-          <strong>Nombre:</strong>
-          <p>{{paciente?.nombre}}</p>
-        </div>
-        <div>
-          <strong>Fecha Nacimiento:</strong>
-          <p>{{paciente?.fechaNacimiento | date:'dd/MM/yyyy'}}</p>
-        </div>
-        <div>
-          <strong>Edad:</strong>
-          <p>{{paciente?.edad}}</p>
-        </div>
+    <div>
+      <div class="alert" [class.alert-info]="isNew" [class.alert-warning]="!isNew" role="alert">
+        <mat-icon class="align-middle text-primary">person_outline</mat-icon> Configuracion de Pacientes
       </div>
-      <div class="panel-footer">
-        <div class="btn-group-justified text-center">
-          <div class="btn-group">
-            <button class="btn btn-primary">
-              <i class="fa fa-floppy-o"></i> Guardar</button>
+      <div class="panel panel-default">
+        <div class="text-center" *ngIf="paciente?.foto">
+          <img [src]="photoUrl()" alt="{{paciente?.nombre}}" class="rounded thumbnail profile-image">
+
+        </div>
+        <p class="mt-1 text-center">
+          <button type="button" class="btn btn-outline-primary btn-sm">Subir Foto</button>
+        </p>
+        <div class="panel-body">
+          <div>
+            <strong>Nombre:</strong>
+            <p>{{paciente?.nombre}}</p>
           </div>
-          <div class="btn-group">
-            <button class="btn btn-danger" [routerLink]="['/pacientes']" type="button">
-              <i class="fa fa-times-circle"></i> Cancelar</button>
+          <div>
+            <strong>Fecha Nacimiento:</strong>
+            <p>{{paciente?.fechaNacimiento | date:'dd/MM/yyyy'}}</p>
+          </div>
+          <div>
+            <strong>Edad:</strong>
+            <p>{{paciente?.edad}}</p>
           </div>
         </div>
+        <div class="panel-footer">
+          <div class="btn-group-justified text-center">
+            <div class="btn-group">
+              <button class="btn btn-primary">
+                <i class="fa fa-floppy-o"></i> Guardar</button>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-danger" [routerLink]="['/pacientes']" type="button">
+                <i class="fa fa-times-circle"></i> Cancelar</button>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
     </div>
   </div>
   <div class="col-sm-9">
@@ -87,8 +92,8 @@
               </div>
             </div>
             <mat-form-field>
-              <mat-select placeholder="Estado Civil" [(ngModel)]="paciente.estadoCivil">
-                <mat-option *ngFor="let ec of estadoCivil" [value]="ec.value">
+              <mat-select placeholder="Estado Civil" [(ngModel)]="paciente.estadoCivil" name="estadoCivil" #estadoCivil="ngModel" panelClass="select-panel-bg">
+                <mat-option *ngFor="let ec of estadosCiviles" [value]="ec.value">
                   {{ ec.descripcion }}
                 </mat-option>
               </mat-select>
@@ -106,73 +111,248 @@
               </div>
             </div>
             <div class="row">
-                <div class="col-sm-4">
-                    <mat-form-field>
-                      <mat-select placeholder="Seguro Medico?" [(ngModel)]="paciente.hasSeguroMedico" name="hasSeguroMedico" #hasSeguroMedico="ngModel">
+              <div class="col-sm-3">
+                <mat-form-field>
+                  <mat-select placeholder="Seguro Medico?" [(ngModel)]="paciente.hasSeguroMedico" name="hasSeguroMedico" #hasSeguroMedico="ngModel"
+                    panelClass="select-panel-bg">
+                    <mat-option *ngFor="let sm of siNo" [value]="sm.value">
+                      {{ sm.descripcion }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-9">
+                <mat-form-field *ngIf="paciente.hasSeguroMedico">
+                  <mat-select placeholder="Aseguradora" [(ngModel)]="paciente.aseguradoraId" name="aseguradoraId" #aseguradoraId="ngModel"
+                    panelClass="select-panel-bg">
+                    <mat-option>Ninguno</mat-option>
+                    <mat-option *ngFor="let aseguradora of aseguradoras | async" [value]="aseguradora.id">
+                      {{ aseguradora.nombre }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <mat-form-field>
+              <mat-select placeholder="Ocupacion Paciente" [(ngModel)]="paciente.ocupacionId" name="ocupacionId" #ocupacionId="ngModel"
+                panelClass="select-panel-bg">
+                <mat-option>Ninguno</mat-option>
+                <mat-option *ngFor="let ocupacion of ocupaciones | async" [value]="ocupacion.id">
+                  {{ ocupacion.descripcion }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="row">
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <input matInput placeholder="Nombre Conyugue" [(ngModel)]="paciente.nombreConyugue" name="nombreConyugue" #nombreConyugue="ngModel">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-select placeholder="Ocupacion Conyugue" [(ngModel)]="paciente.ocupacionIdConyugue" name="ocupacionIdConyugue" #ocupacionIdConyugue="ngModel"
+                    panelClass="select-panel-bg">
+                    <mat-option>Ninguno</mat-option>
+                    <mat-option *ngFor="let ocupacion of ocupaciones | async" [value]="ocupacion.id">
+                      {{ ocupacion.descripcion }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-select placeholder="Religion" [(ngModel)]="paciente.religionId" name="religionId" #religionId="ngModel" panelClass="select-panel-bg">
+                    <mat-option>Ninguno</mat-option>
+                    <mat-option *ngFor="let religion of religiones | async" [value]="religion.id">
+                      {{ religion.descripcion }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-select placeholder="Grupo Sanguineo" [(ngModel)]="paciente.grupoSanguineoId" name="grupoSanguineoId" #grupoSanguineoId="ngModel"
+                    panelClass="select-panel-bg">
+                    <mat-option>Ninguno</mat-option>
+                    <mat-option *ngFor="let gs of gruposSanguineos | async" [value]="gs.id">
+                      {{ gs.descripcion }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="alert alert-info">Antecedentes Gineco Obst.</div>
+            <div class="row">
+              <div class="col-sm-3">
+                <mat-form-field>
+                  <input matInput placeholder="Edad Menarca" [(ngModel)]="paciente.edadMenarca" name="edadMenarca" #edadMenarca="ngModel">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <input matInput placeholder="Frecuencia Menstrual" [(ngModel)]="paciente.frecuenciaMenstrual" name="frecuenciaMenstrual"
+                    #frecuenciaMenstrual="ngModel">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-3">
+                <mat-form-field>
+                  <input matInput placeholder="Duracion Menstruacion" [(ngModel)]="paciente.diasMenstruacion" name="diasMenstruacion" #diasMenstruacion="ngModel">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3">
+                <mat-form-field>
+                  <input matInput placeholder="Edad Menopausia" [(ngModel)]="paciente.edadMenopausia" name="edadMenopausia" #edadMenopausia="ngModel">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-3">
+                <mat-form-field>
+                  <input matInput placeholder="Edad Primera Relacion Sexual" [(ngModel)]="paciente.edadPrimeraRelacionSexual" name="edadPrimeraRelacionSexual"
+                    #edadPrimeraRelacionSexual="ngModel">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3">
+                <mat-form-field>
+                  <mat-select placeholder="Es Alergica?" [(ngModel)]="paciente.isAlergica" name="isAlergica" #isAlergica="ngModel" panelClass="select-panel-bg">
+                    <mat-option *ngFor="let sm of siNo" [value]="sm.value">
+                      {{ sm.descripcion }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-9">
+                <mat-form-field *ngIf="paciente.isAlergica">
+                  <input matInput placeholder="Medicamentos" [(ngModel)]="paciente.medicamentosAlergica" name="medicamentosAlergica" #medicamentosAlergica="ngModel">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3">
+                <mat-form-field>
+                  <mat-select placeholder="Cirugia Previa?" [(ngModel)]="paciente.hasCirugiaPrevia" name="hasCirugiaPrevia" #hasCirugiaPrevia="ngModel"
+                    panelClass="select-panel-bg">
+                    <mat-option *ngFor="let sm of siNo" [value]="sm.value">
+                      {{ sm.descripcion }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-9">
+                <mat-form-field *ngIf="paciente.hasCirugiaPrevia">
+                  <input matInput placeholder="Cirugias" [(ngModel)]="paciente.cirugias" name="cirugias" #cirugias="ngModel">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3">
+                <mat-form-field>
+                  <mat-select placeholder="Metodo de Planificacion?" [(ngModel)]="paciente.isPlanificando" name="isPlanificando" #isPlanificando="ngModel"
+                    panelClass="select-panel-bg">
+                    <mat-option *ngFor="let sm of siNo" [value]="sm.value">
+                      {{ sm.descripcion }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-9">
+                <mat-form-field *ngIf="paciente.isPlanificando">
+                  <input matInput placeholder="Metodo" [(ngModel)]="paciente.metodoPlanificacion" name="metodoPlanificacion" #metodoPlanificacion="ngModel">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-2 col-md-3 col-sm-4">
+                <mat-form-field>
+                  <input matInput [matDatepicker]="fechaUltimaCitologia" placeholder="Fecha Ult. Citologia" [(ngModel)]="paciente.fechaUltimaCitologia">
+                  <mat-datepicker-toggle matSuffix [for]="fechaUltimaCitologia"></mat-datepicker-toggle>
+                  <mat-datepicker #fechaUltimaCitologia></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-2 col-md-3 col-sm-4">
+                <mat-form-field>
+                  <input matInput placeholder="No. Embarazos" [(ngModel)]="paciente.cantidadEmbarazos" name="cantidadEmbarazos" #cantidadEmbarazos="ngModel">
+                </mat-form-field>
+              </div>
+              <div class="col-lg-2 col-md-3 col-sm-4">
+                <mat-form-field>
+                  <input matInput placeholder="No. Hijos Vivos" [(ngModel)]="paciente.cantidadHijosVivos" name="cantidadHijosVivos" #cantidadHijosVivos="ngModel">
+                </mat-form-field>
+              </div>
+              <div class="col-lg-2 col-md-3 col-sm-4">
+                <mat-form-field>
+                  <input matInput placeholder="No. Hijos Muertos" [(ngModel)]="paciente.cantidadHijosMuertos" name="cantidadHijosMuertos" #cantidadHijosMuertos="ngModel">
+                </mat-form-field>
+              </div>
+              <div class="col-lg-2 col-md-3 col-sm-4">
+                <mat-form-field>
+                  <input matInput placeholder="No. Partos Vaginales" [(ngModel)]="paciente.cantidadPartosVaginales" name="cantidadPartosVaginales"
+                    #cantidadPartosVaginales="ngModel">
+                </mat-form-field>
+              </div>
+              <div class="col-lg-2 col-md-3 col-sm-4">
+                <mat-form-field>
+                  <input matInput placeholder="Cantidad Obitos" [(ngModel)]="paciente.cantidadObitos" name="cantidadObitos" #cantidadObitos="ngModel">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-2 col-md-3 col-sm-4">
+                <mat-form-field>
+                  <input matInput placeholder="Cantidad Ectopicos" [(ngModel)]="paciente.cantidadEctopicos" name="cantidadEctopicos" #cantidadEctopicos="ngModel">
+                </mat-form-field>
+              </div>
+              <div class="col-lg-2 col-md-3 col-sm-4">
+                <mat-form-field>
+                  <input matInput placeholder="Cantidad Molas" [(ngModel)]="paciente.cantidadMolas" name="cantidadMolas" #cantidadMolas="ngModel">
+                </mat-form-field>
+              </div>
+              <div class="col-lg-2 col-md-3 col-sm-4">
+                <mat-form-field>
+                  <input matInput placeholder="Cantidad Abortos" [(ngModel)]="paciente.cantidadAbortos" name="cantidadAbortos" #cantidadAbortos="ngModel">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-3 col-md-4 col-sm-6">
+                <mat-form-field>
+                  <input matInput [matDatepicker]="fechaUltimaCesarea" placeholder="Fecha Ultima Cesarea" [(ngModel)]="paciente.fechaUltimaCesarea">
+                  <mat-datepicker-toggle matSuffix [for]="fechaUltimaCesarea"></mat-datepicker-toggle>
+                  <mat-datepicker #fechaUltimaCesarea></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6">
+                  <mat-form-field>
+                      <input matInput [matDatepicker]="fechaUltimoEmbarazo" placeholder="Fecha Ultimo Embarazo" [(ngModel)]="paciente.fechaUltimoEmbarazo">
+                      <mat-datepicker-toggle matSuffix [for]="fechaUltimoEmbarazo"></mat-datepicker-toggle>
+                      <mat-datepicker #fechaUltimoEmbarazo></mat-datepicker>
+                    </mat-form-field>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6">
+                  <mat-form-field>
+                      <mat-select placeholder="Termino Ult. Embarazo?" [(ngModel)]="paciente.terminoUltimoEmbarazo" name="terminoUltimoEmbarazo" #terminoUltimoEmbarazo="ngModel"
+                        panelClass="select-panel-bg">
+                        <mat-option *ngFor="let sm of terminosUltEmbarazo" [value]="sm.value">
+                          {{ sm.descripcion }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6">
+                  <mat-form-field>
+                      <mat-select placeholder="Legrados?" [(ngModel)]="paciente.hasLegrados" name="hasLegrados" #hasLegrados="ngModel"
+                        panelClass="select-panel-bg">
                         <mat-option *ngFor="let sm of siNo" [value]="sm.value">
                           {{ sm.descripcion }}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
-                </div>
-                <div class="col-sm-8">
-                  <mat-form-field *ngIf="paciente.hasSeguroMedico">
-                    <mat-select placeholder="Aseguradora" [(ngModel)]="paciente.aseguradoraId" name="aseguradoraId" #aseguradoraId="ngModel">
-                      <mat-option>Ninguno</mat-option>
-                      <mat-option *ngFor="let aseguradora of aseguradoras" [value]="aseguradora.id">
-                        {{ aseguradora.nombre }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
               </div>
-              <mat-form-field>
-                <mat-select placeholder="Ocupacion Paciente" [(ngModel)]="paciente.ocupacionId" name="ocupacionId" #ocupacionId="ngModel">
-                  <mat-option>Ninguno</mat-option>
-                  <mat-option *ngFor="let ocupacion of ocupaciones" [value]="ocupacion.id">
-                    {{ ocupacion.descripcion }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <div class="row">
-                  <div class="col-sm-6">
-                      <mat-form-field>
-                        <input matInput placeholder="Nombre Conyugue" [(ngModel)]="paciente.nombreConyugue" name="nombreConyugue" #nombreConyugue="ngModel">
-                      </mat-form-field>
-                  </div>
-                  <div class="col-sm-6">
-                      <mat-form-field>
-                          <mat-select placeholder="Ocupacion Conyugue" [(ngModel)]="paciente.ocupacionIdConyugue" name="ocupacionIdConyugue" #ocupacionIdConyugue="ngModel">
-                            <mat-option>Ninguno</mat-option>
-                            <mat-option *ngFor="let ocupacion of ocupaciones" [value]="ocupacion.id">
-                              {{ ocupacion.descripcion }}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                  </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <mat-form-field>
-                            <mat-select placeholder="Religion" [(ngModel)]="paciente.religionId" name="religionId" #religionId="ngModel">
-                              <mat-option>Ninguno</mat-option>
-                              <mat-option *ngFor="let religion of religiones" [value]="religion.id">
-                                {{ religion.descripcion }}
-                              </mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                    </div>
-                    <div class="col-sm-6">
-                        <mat-form-field>
-                            <mat-select placeholder="Grupo Sanguineo" [(ngModel)]="paciente.grupoSanguineoId" name="grupoSanguineoId" #grupoSanguineoId="ngModel">
-                              <mat-option>Ninguno</mat-option>
-                              <mat-option *ngFor="let gs of gruposSanguineos" [value]="gs.id">
-                                {{ gs.descripcion }}
-                              </mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                    </div>
-                  </div>
+            </div>
           </div>
         </tab>
         <tab heading="Antec. Gine-Obs">
