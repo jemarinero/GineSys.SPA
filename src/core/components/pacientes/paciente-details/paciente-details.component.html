@@ -7,9 +7,8 @@
       <div class="panel panel-default">
         <div class="text-center" *ngIf="paciente?.foto">
           <img [src]="photoUrl()" alt="{{paciente?.nombre}}" class="rounded thumbnail profile-image">
-
         </div>
-        <p class="mt-1 text-center">
+        <p class="mt-1 text-center" *ngIf="!isNew">
           <button type="button" class="btn btn-outline-primary btn-sm">Subir Foto</button>
         </p>
         <div class="panel-body">
@@ -29,7 +28,7 @@
         <div class="panel-footer">
           <div class="btn-group-justified text-center">
             <div class="btn-group">
-              <button class="btn btn-primary">
+              <button class="btn btn-primary" role="button" (click)="savePaciente(f.value)" [disabled]="!f.valid">
                 <i class="fa fa-floppy-o"></i> Guardar</button>
             </div>
             <div class="btn-group">
@@ -46,313 +45,329 @@
       <tabset class="member-tabset">
         <tab heading="Informacion General">
           <div class="page-container">
-            <ng-container>
+            <form #f="ngForm">
+              <ng-container>
+                <mat-form-field *ngIf="!isNew">
+                  <input matInput placeholder="Codigo" [(ngModel)]="paciente.id" name="id" #id="ngModel" readonly>
+                </mat-form-field>
+              </ng-container>
               <mat-form-field>
-                <input matInput placeholder="Codigo" [(ngModel)]="paciente.id" name="id" #id="ngModel" readonly>
+                <input matInput placeholder="Nombre Completo" [(ngModel)]="paciente.nombre" name="nombre" #nombre="ngModel" required>
+                <mat-error>Campo requerido.</mat-error>
               </mat-form-field>
-            </ng-container>
-            <mat-form-field>
-              <input matInput placeholder="Nombre Completo" [(ngModel)]="paciente.nombre" name="nombre" #nombre="ngModel">
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput placeholder="Numero Identidad" [(ngModel)]="paciente.numeroIdentidad" name="numeroIdentidad" #numeroIdentidad="ngModel">
-            </mat-form-field>
-            <mat-form-field>
-              <textarea matInput placeholder="Direccion" [(ngModel)]="paciente.direccion" name="direccion" #direccion="ngModel"></textarea>
-            </mat-form-field>
-            <div class="row">
-              <div class="col-md-4">
-                <mat-form-field>
-                  <input matInput (dateChange)="dateChanged($event)" [matDatepicker]="fechaNacimiento" placeholder="Fecha de Nacimiento" [(ngModel)]="paciente.fechaNacimiento">
-                  <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
-                  <mat-datepicker #fechaNacimiento></mat-datepicker>
-                </mat-form-field>
-              </div>
-              <div class="col-md-2">
-                <mat-form-field>
-                  <input matInput placeholder="Anos" [(ngModel)]="paciente.edad" readonly>
-                </mat-form-field>
-              </div>
-              <div class="col-md-1">
-                <mat-form-field>
-                  <input matInput placeholder="Meses" [(ngModel)]="paciente.meses" readonly>
-                </mat-form-field>
-              </div>
-              <div class="col-md-1">
-                <mat-form-field>
-                  <input matInput placeholder="Dias" [(ngModel)]="paciente.dias" readonly>
-                </mat-form-field>
-              </div>
-              <div class="col-md-4">
-                <mat-form-field>
-                  <input matInput [matDatepicker]="fechaUltMenstruacion" placeholder="Ult. Menstruacion" [(ngModel)]="paciente.fechaUltMenstruacion">
-                  <mat-datepicker-toggle matSuffix [for]="fechaUltMenstruacion"></mat-datepicker-toggle>
-                  <mat-datepicker #fechaUltMenstruacion></mat-datepicker>
-                </mat-form-field>
-              </div>
-            </div>
-            <mat-form-field>
-              <mat-select placeholder="Estado Civil" [(ngModel)]="paciente.estadoCivil" name="estadoCivil" #estadoCivil="ngModel" panelClass="select-panel-bg">
-                <mat-option *ngFor="let ec of estadosCiviles" [value]="ec.value">
-                  {{ ec.descripcion }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <div class="row">
-              <div class="col-sm-4">
-                <mat-form-field>
-                  <input matInput placeholder="Numero Telefono" [(ngModel)]="paciente.telefono" name="telefono" #telefono="ngModel">
-                </mat-form-field>
-              </div>
-              <div class="col-sm-8">
-                <mat-form-field>
-                  <input matInput placeholder="Correo" [(ngModel)]="paciente.correo" name="correo" #correo="ngModel">
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-3">
-                <mat-form-field>
-                  <mat-select placeholder="Seguro Medico?" [(ngModel)]="paciente.hasSeguroMedico" name="hasSeguroMedico" #hasSeguroMedico="ngModel"
-                    panelClass="select-panel-bg">
-                    <mat-option *ngFor="let sm of siNo" [value]="sm.value">
-                      {{ sm.descripcion }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-              <div class="col-sm-9">
-                <mat-form-field *ngIf="paciente.hasSeguroMedico">
-                  <mat-select placeholder="Aseguradora" [(ngModel)]="paciente.aseguradoraId" name="aseguradoraId" #aseguradoraId="ngModel"
-                    panelClass="select-panel-bg">
-                    <mat-option>Ninguno</mat-option>
-                    <mat-option *ngFor="let aseguradora of aseguradoras | async" [value]="aseguradora.id">
-                      {{ aseguradora.nombre }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </div>
-            <mat-form-field>
-              <mat-select placeholder="Ocupacion Paciente" [(ngModel)]="paciente.ocupacionId" name="ocupacionId" #ocupacionId="ngModel"
-                panelClass="select-panel-bg">
-                <mat-option>Ninguno</mat-option>
-                <mat-option *ngFor="let ocupacion of ocupaciones | async" [value]="ocupacion.id">
-                  {{ ocupacion.descripcion }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <div class="row">
-              <div class="col-sm-6">
-                <mat-form-field>
-                  <input matInput placeholder="Nombre Conyugue" [(ngModel)]="paciente.nombreConyugue" name="nombreConyugue" #nombreConyugue="ngModel">
-                </mat-form-field>
-              </div>
-              <div class="col-sm-6">
-                <mat-form-field>
-                  <mat-select placeholder="Ocupacion Conyugue" [(ngModel)]="paciente.ocupacionIdConyugue" name="ocupacionIdConyugue" #ocupacionIdConyugue="ngModel"
-                    panelClass="select-panel-bg">
-                    <mat-option>Ninguno</mat-option>
-                    <mat-option *ngFor="let ocupacion of ocupaciones | async" [value]="ocupacion.id">
-                      {{ ocupacion.descripcion }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-6">
-                <mat-form-field>
-                  <mat-select placeholder="Religion" [(ngModel)]="paciente.religionId" name="religionId" #religionId="ngModel" panelClass="select-panel-bg">
-                    <mat-option>Ninguno</mat-option>
-                    <mat-option *ngFor="let religion of religiones | async" [value]="religion.id">
-                      {{ religion.descripcion }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-              <div class="col-sm-6">
-                <mat-form-field>
-                  <mat-select placeholder="Grupo Sanguineo" [(ngModel)]="paciente.grupoSanguineoId" name="grupoSanguineoId" #grupoSanguineoId="ngModel"
-                    panelClass="select-panel-bg">
-                    <mat-option>Ninguno</mat-option>
-                    <mat-option *ngFor="let gs of gruposSanguineos | async" [value]="gs.id">
-                      {{ gs.descripcion }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="alert alert-info">Antecedentes Gineco Obst.</div>
-            <div class="row">
-              <div class="col-sm-3">
-                <mat-form-field>
-                  <input matInput placeholder="Edad Menarca" [(ngModel)]="paciente.edadMenarca" name="edadMenarca" #edadMenarca="ngModel">
-                </mat-form-field>
-              </div>
-              <div class="col-sm-6">
-                <mat-form-field>
-                  <input matInput placeholder="Frecuencia Menstrual" [(ngModel)]="paciente.frecuenciaMenstrual" name="frecuenciaMenstrual"
-                    #frecuenciaMenstrual="ngModel">
-                </mat-form-field>
-              </div>
-              <div class="col-sm-3">
-                <mat-form-field>
-                  <input matInput placeholder="Duracion Menstruacion" [(ngModel)]="paciente.diasMenstruacion" name="diasMenstruacion" #diasMenstruacion="ngModel">
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-3">
-                <mat-form-field>
-                  <input matInput placeholder="Edad Menopausia" [(ngModel)]="paciente.edadMenopausia" name="edadMenopausia" #edadMenopausia="ngModel">
-                </mat-form-field>
-              </div>
-              <div class="col-sm-3">
-                <mat-form-field>
-                  <input matInput placeholder="Edad Primera Relacion Sexual" [(ngModel)]="paciente.edadPrimeraRelacionSexual" name="edadPrimeraRelacionSexual"
-                    #edadPrimeraRelacionSexual="ngModel">
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-3">
-                <mat-form-field>
-                  <mat-select placeholder="Es Alergica?" [(ngModel)]="paciente.isAlergica" name="isAlergica" #isAlergica="ngModel" panelClass="select-panel-bg">
-                    <mat-option *ngFor="let sm of siNo" [value]="sm.value">
-                      {{ sm.descripcion }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-              <div class="col-sm-9">
-                <mat-form-field *ngIf="paciente.isAlergica">
-                  <input matInput placeholder="Medicamentos" [(ngModel)]="paciente.medicamentosAlergica" name="medicamentosAlergica" #medicamentosAlergica="ngModel">
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-3">
-                <mat-form-field>
-                  <mat-select placeholder="Cirugia Previa?" [(ngModel)]="paciente.hasCirugiaPrevia" name="hasCirugiaPrevia" #hasCirugiaPrevia="ngModel"
-                    panelClass="select-panel-bg">
-                    <mat-option *ngFor="let sm of siNo" [value]="sm.value">
-                      {{ sm.descripcion }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-              <div class="col-sm-9">
-                <mat-form-field *ngIf="paciente.hasCirugiaPrevia">
-                  <input matInput placeholder="Cirugias" [(ngModel)]="paciente.cirugias" name="cirugias" #cirugias="ngModel">
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-3">
-                <mat-form-field>
-                  <mat-select placeholder="Metodo de Planificacion?" [(ngModel)]="paciente.isPlanificando" name="isPlanificando" #isPlanificando="ngModel"
-                    panelClass="select-panel-bg">
-                    <mat-option *ngFor="let sm of siNo" [value]="sm.value">
-                      {{ sm.descripcion }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-              <div class="col-sm-9">
-                <mat-form-field *ngIf="paciente.isPlanificando">
-                  <input matInput placeholder="Metodo" [(ngModel)]="paciente.metodoPlanificacion" name="metodoPlanificacion" #metodoPlanificacion="ngModel">
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-2 col-md-3 col-sm-4">
-                <mat-form-field>
-                  <input matInput [matDatepicker]="fechaUltimaCitologia" placeholder="Fecha Ult. Citologia" [(ngModel)]="paciente.fechaUltimaCitologia">
-                  <mat-datepicker-toggle matSuffix [for]="fechaUltimaCitologia"></mat-datepicker-toggle>
-                  <mat-datepicker #fechaUltimaCitologia></mat-datepicker>
-                </mat-form-field>
-              </div>
-              <div class="col-lg-2 col-md-3 col-sm-4">
-                <mat-form-field>
-                  <input matInput placeholder="No. Embarazos" [(ngModel)]="paciente.cantidadEmbarazos" name="cantidadEmbarazos" #cantidadEmbarazos="ngModel">
-                </mat-form-field>
-              </div>
-              <div class="col-lg-2 col-md-3 col-sm-4">
-                <mat-form-field>
-                  <input matInput placeholder="No. Hijos Vivos" [(ngModel)]="paciente.cantidadHijosVivos" name="cantidadHijosVivos" #cantidadHijosVivos="ngModel">
-                </mat-form-field>
-              </div>
-              <div class="col-lg-2 col-md-3 col-sm-4">
-                <mat-form-field>
-                  <input matInput placeholder="No. Hijos Muertos" [(ngModel)]="paciente.cantidadHijosMuertos" name="cantidadHijosMuertos" #cantidadHijosMuertos="ngModel">
-                </mat-form-field>
-              </div>
-              <div class="col-lg-2 col-md-3 col-sm-4">
-                <mat-form-field>
-                  <input matInput placeholder="No. Partos Vaginales" [(ngModel)]="paciente.cantidadPartosVaginales" name="cantidadPartosVaginales"
-                    #cantidadPartosVaginales="ngModel">
-                </mat-form-field>
-              </div>
-              <div class="col-lg-2 col-md-3 col-sm-4">
-                <mat-form-field>
-                  <input matInput placeholder="Cantidad Obitos" [(ngModel)]="paciente.cantidadObitos" name="cantidadObitos" #cantidadObitos="ngModel">
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-2 col-md-3 col-sm-4">
-                <mat-form-field>
-                  <input matInput placeholder="Cantidad Ectopicos" [(ngModel)]="paciente.cantidadEctopicos" name="cantidadEctopicos" #cantidadEctopicos="ngModel">
-                </mat-form-field>
-              </div>
-              <div class="col-lg-2 col-md-3 col-sm-4">
-                <mat-form-field>
-                  <input matInput placeholder="Cantidad Molas" [(ngModel)]="paciente.cantidadMolas" name="cantidadMolas" #cantidadMolas="ngModel">
-                </mat-form-field>
-              </div>
-              <div class="col-lg-2 col-md-3 col-sm-4">
-                <mat-form-field>
-                  <input matInput placeholder="Cantidad Abortos" [(ngModel)]="paciente.cantidadAbortos" name="cantidadAbortos" #cantidadAbortos="ngModel">
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-3 col-md-4 col-sm-6">
-                <mat-form-field>
-                  <input matInput [matDatepicker]="fechaUltimaCesarea" placeholder="Fecha Ultima Cesarea" [(ngModel)]="paciente.fechaUltimaCesarea">
-                  <mat-datepicker-toggle matSuffix [for]="fechaUltimaCesarea"></mat-datepicker-toggle>
-                  <mat-datepicker #fechaUltimaCesarea></mat-datepicker>
-                </mat-form-field>
-              </div>
-              <div class="col-lg-3 col-md-4 col-sm-6">
+              <mat-form-field>
+                <input matInput placeholder="Numero Identidad" [(ngModel)]="paciente.numeroIdentidad" name="numeroIdentidad" #numeroIdentidad="ngModel" required>
+                <mat-error>Campo requerido.</mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <textarea matInput placeholder="Direccion" [(ngModel)]="paciente.direccion" name="direccion" #direccion="ngModel" required></textarea>
+                <mat-error>Campo requerido.</mat-error>
+              </mat-form-field>
+              <div class="row">
+                <div class="col-md-4">
                   <mat-form-field>
-                      <input matInput [matDatepicker]="fechaUltimoEmbarazo" placeholder="Fecha Ultimo Embarazo" [(ngModel)]="paciente.fechaUltimoEmbarazo">
-                      <mat-datepicker-toggle matSuffix [for]="fechaUltimoEmbarazo"></mat-datepicker-toggle>
-                      <mat-datepicker #fechaUltimoEmbarazo></mat-datepicker>
-                    </mat-form-field>
-              </div>
-              <div class="col-lg-3 col-md-4 col-sm-6">
+                    <input matInput (dateChange)="dateChanged($event)" [matDatepicker]="fechaNacimiento" name="fechaNacimiento" #fechaNacimiento="ngModel" placeholder="Fecha de Nacimiento" [(ngModel)]="paciente.fechaNacimiento" required>
+                    <mat-error>Campo requerido.</mat-error>
+                    <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
+                    <mat-datepicker #fechaNacimiento touchUi="true"></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2">
                   <mat-form-field>
-                      <mat-select placeholder="Termino Ult. Embarazo?" [(ngModel)]="paciente.terminoUltimoEmbarazo" name="terminoUltimoEmbarazo" #terminoUltimoEmbarazo="ngModel"
-                        panelClass="select-panel-bg">
-                        <mat-option *ngFor="let sm of terminosUltEmbarazo" [value]="sm.value">
-                          {{ sm.descripcion }}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-              </div>
-              <div class="col-lg-3 col-md-4 col-sm-6">
+                    <input matInput placeholder="Anos" [(ngModel)]="paciente.edad" readonly [ngModelOptions]="{standalone: true}">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-1">
                   <mat-form-field>
-                      <mat-select placeholder="Legrados?" [(ngModel)]="paciente.hasLegrados" name="hasLegrados" #hasLegrados="ngModel"
-                        panelClass="select-panel-bg">
-                        <mat-option *ngFor="let sm of siNo" [value]="sm.value">
-                          {{ sm.descripcion }}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
+                    <input matInput placeholder="Meses" [(ngModel)]="paciente.meses" readonly [ngModelOptions]="{standalone: true}">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-1">
+                  <mat-form-field>
+                    <input matInput placeholder="Dias" [(ngModel)]="paciente.dias" readonly [ngModelOptions]="{standalone: true}">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="fechaUltMenstruacion" name="fechaUltMenstruacion" #fechaUltMenstruacion="ngModel" placeholder="Ult. Menstruacion" [(ngModel)]="paciente.fechaUltMenstruacion" required>
+                    <mat-datepicker-toggle matSuffix [for]="fechaUltMenstruacion"></mat-datepicker-toggle>
+                    <mat-datepicker #fechaUltMenstruacion touchUi="true"></mat-datepicker>
+                    <mat-error>Campo requerido.</mat-error>
+                  </mat-form-field>
+                </div>
               </div>
-            </div>
+              <mat-form-field>
+                <mat-select placeholder="Estado Civil" [(ngModel)]="paciente.estadoCivil" name="estadoCivil" #estadoCivil="ngModel" panelClass="select-panel-bg">
+                  <mat-option *ngFor="let ec of estadosCiviles" [value]="ec.value">
+                    {{ ec.descripcion }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div class="row">
+                <div class="col-sm-4">
+                  <mat-form-field>
+                    <input matInput placeholder="Numero Telefono" [(ngModel)]="paciente.telefono" name="telefono" #telefono="ngModel">
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-8">
+                  <mat-form-field>
+                    <input matInput placeholder="Correo" [(ngModel)]="paciente.correo" name="correo" #correo="ngModel">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <mat-form-field>
+                    <mat-select placeholder="Seguro Medico?" [(ngModel)]="paciente.hasSeguroMedico" name="hasSeguroMedico" #hasSeguroMedico="ngModel"
+                      panelClass="select-panel-bg">
+                      <mat-option *ngFor="let sm of siNo" [value]="sm.value">
+                        {{ sm.descripcion }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-9">
+                  <mat-form-field *ngIf="paciente.hasSeguroMedico">
+                    <mat-select placeholder="Aseguradora" [(ngModel)]="paciente.aseguradoraId" name="aseguradoraId" #aseguradoraId="ngModel"
+                      panelClass="select-panel-bg">
+                      <mat-option>Ninguno</mat-option>
+                      <mat-option *ngFor="let aseguradora of aseguradoras | async" [value]="aseguradora.id">
+                        {{ aseguradora.nombre }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <mat-form-field>
+                <mat-select placeholder="Ocupacion Paciente" [(ngModel)]="paciente.ocupacionId" name="ocupacionId" #ocupacionId="ngModel"
+                  panelClass="select-panel-bg">
+                  <mat-option>Ninguno</mat-option>
+                  <mat-option *ngFor="let ocupacion of ocupaciones | async" [value]="ocupacion.id">
+                    {{ ocupacion.descripcion }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div class="row">
+                <div class="col-sm-6">
+                  <mat-form-field>
+                    <input matInput placeholder="Nombre Conyugue" [(ngModel)]="paciente.nombreConyugue" name="nombreConyugue" #nombreConyugue="ngModel">
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                  <mat-form-field>
+                    <mat-select placeholder="Ocupacion Conyugue" [(ngModel)]="paciente.ocupacionIdConyugue" name="ocupacionIdConyugue" #ocupacionIdConyugue="ngModel"
+                      panelClass="select-panel-bg">
+                      <mat-option>Ninguno</mat-option>
+                      <mat-option *ngFor="let ocupacion of ocupaciones | async" [value]="ocupacion.id">
+                        {{ ocupacion.descripcion }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <mat-form-field>
+                    <mat-select placeholder="Religion" [(ngModel)]="paciente.religionId" name="religionId" #religionId="ngModel" panelClass="select-panel-bg">
+                      <mat-option>Ninguno</mat-option>
+                      <mat-option *ngFor="let religion of religiones | async" [value]="religion.id">
+                        {{ religion.descripcion }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                  <mat-form-field>
+                    <mat-select placeholder="Grupo Sanguineo" [(ngModel)]="paciente.grupoSanguineoId" name="grupoSanguineoId" #grupoSanguineoId="ngModel"
+                      panelClass="select-panel-bg">
+                      <mat-option>Ninguno</mat-option>
+                      <mat-option *ngFor="let gs of gruposSanguineos | async" [value]="gs.id">
+                        {{ gs.descripcion }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="alert alert-info">Antecedentes Gineco Obst.</div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <mat-form-field>
+                    <input matInput placeholder="Edad Menarca" [(ngModel)]="paciente.edadMenarca" name="edadMenarca" #edadMenarca="ngModel">
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                  <mat-form-field>
+                    <input matInput placeholder="Frecuencia Menstrual" [(ngModel)]="paciente.frecuenciaMenstrual" name="frecuenciaMenstrual"
+                      #frecuenciaMenstrual="ngModel">
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-3">
+                  <mat-form-field>
+                    <input matInput placeholder="Duracion Menstruacion" [(ngModel)]="paciente.diasMenstruacion" name="diasMenstruacion" #diasMenstruacion="ngModel">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-3">
+                      <mat-form-field>
+                          <mat-select placeholder="Cantidad Menstruacion" [(ngModel)]="paciente.cantidadMenstruacion" name="cantidadMenstruacion" #cantidadMenstruacion="ngModel"
+                            panelClass="select-panel-bg">
+                            <mat-option *ngFor="let sm of cantMenstruacion" [value]="sm.value">
+                              {{ sm.descripcion }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                    </div>
+                <div class="col-sm-3">
+                  <mat-form-field>
+                    <input matInput placeholder="Edad Menopausia" [(ngModel)]="paciente.edadMenopausia" name="edadMenopausia" #edadMenopausia="ngModel">
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-3">
+                  <mat-form-field>
+                    <input matInput placeholder="Edad Primera Relacion Sexual" [(ngModel)]="paciente.edadPrimeraRelacionSexual" name="edadPrimeraRelacionSexual"
+                      #edadPrimeraRelacionSexual="ngModel">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <mat-form-field>
+                    <mat-select placeholder="Es Alergica?" [(ngModel)]="paciente.isAlergica" name="isAlergica" #isAlergica="ngModel" panelClass="select-panel-bg">
+                      <mat-option *ngFor="let sm of siNo" [value]="sm.value">
+                        {{ sm.descripcion }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-9">
+                  <mat-form-field *ngIf="paciente.isAlergica">
+                    <input matInput placeholder="Medicamentos" [(ngModel)]="paciente.medicamentosAlergica" name="medicamentosAlergica" #medicamentosAlergica="ngModel">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <mat-form-field>
+                    <mat-select placeholder="Cirugia Previa?" [(ngModel)]="paciente.hasCirugiaPrevia" name="hasCirugiaPrevia" #hasCirugiaPrevia="ngModel"
+                      panelClass="select-panel-bg">
+                      <mat-option *ngFor="let sm of siNo" [value]="sm.value">
+                        {{ sm.descripcion }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-9">
+                  <mat-form-field *ngIf="paciente.hasCirugiaPrevia">
+                    <input matInput placeholder="Cirugias" [(ngModel)]="paciente.cirugias" name="cirugias" #cirugias="ngModel">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <mat-form-field>
+                    <mat-select placeholder="Metodo de Planificacion?" [(ngModel)]="paciente.isPlanificando" name="isPlanificando" #isPlanificando="ngModel"
+                      panelClass="select-panel-bg">
+                      <mat-option *ngFor="let sm of siNo" [value]="sm.value">
+                        {{ sm.descripcion }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-9">
+                  <mat-form-field *ngIf="paciente.isPlanificando">
+                    <input matInput placeholder="Metodo" [(ngModel)]="paciente.metodoPlanificacion" name="metodoPlanificacion" #metodoPlanificacion="ngModel">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-2 col-md-3 col-sm-4">
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="fechaUltimaCitologia" name="fechaUltimaCitologia" #fechaUltimaCitologia="ngModel" placeholder="Fecha Ult. Citologia" [(ngModel)]="paciente.fechaUltimaCitologia">
+                    <mat-datepicker-toggle matSuffix [for]="fechaUltimaCitologia"></mat-datepicker-toggle>
+                    <mat-datepicker #fechaUltimaCitologia touchUi="true"></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-4">
+                  <mat-form-field>
+                    <input matInput type="number" placeholder="No. Embarazos" [(ngModel)]="paciente.cantidadEmbarazos" name="cantidadEmbarazos" #cantidadEmbarazos="ngModel">
+                  </mat-form-field>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-4">
+                  <mat-form-field>
+                    <input matInput type="number" placeholder="No. Hijos Vivos" [(ngModel)]="paciente.cantidadHijosVivos" name="cantidadHijosVivos" #cantidadHijosVivos="ngModel">
+                  </mat-form-field>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-4">
+                  <mat-form-field>
+                    <input matInput type="number" placeholder="No. Hijos Muertos" [(ngModel)]="paciente.cantidadHijosMuertos" name="cantidadHijosMuertos" #cantidadHijosMuertos="ngModel">
+                  </mat-form-field>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-4">
+                  <mat-form-field>
+                    <input matInput type="number" placeholder="No. Partos Vaginales" [(ngModel)]="paciente.cantidadPartosVaginales" name="cantidadPartosVaginales"
+                      #cantidadPartosVaginales="ngModel">
+                  </mat-form-field>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-4">
+                  <mat-form-field>
+                    <input matInput type="number" placeholder="Cantidad Obitos" [(ngModel)]="paciente.cantidadObitos" name="cantidadObitos" #cantidadObitos="ngModel">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-2 col-md-3 col-sm-4">
+                  <mat-form-field>
+                    <input matInput type="number" placeholder="Cantidad Ectopicos" [(ngModel)]="paciente.cantidadEctopicos" name="cantidadEctopicos" #cantidadEctopicos="ngModel">
+                  </mat-form-field>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-4">
+                  <mat-form-field>
+                    <input matInput type="number" placeholder="Cantidad Molas" [(ngModel)]="paciente.cantidadMolas" name="cantidadMolas" #cantidadMolas="ngModel">
+                  </mat-form-field>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-4">
+                  <mat-form-field>
+                    <input matInput type="number" placeholder="Cantidad Abortos" [(ngModel)]="paciente.cantidadAbortos" name="cantidadAbortos" #cantidadAbortos="ngModel">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="fechaUltimaCesarea" name="fechaUltimaCesarea" #fechaUltimaCesarea="ngModel" placeholder="Fecha Ultima Cesarea" [(ngModel)]="paciente.fechaUltimaCesarea">
+                    <mat-datepicker-toggle matSuffix [for]="fechaUltimaCesarea"></mat-datepicker-toggle>
+                    <mat-datepicker #fechaUltimaCesarea touchUi="true"></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="fechaUltimoEmbarazo" name="fechaUltimoEmbarazo" #fechaUltimoEmbarazo="ngModel" placeholder="Fecha Ultimo Embarazo" [(ngModel)]="paciente.fechaUltimoEmbarazo">
+                    <mat-datepicker-toggle matSuffix [for]="fechaUltimoEmbarazo"></mat-datepicker-toggle>
+                    <mat-datepicker #fechaUltimoEmbarazo touchUi="true"></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <mat-form-field>
+                    <mat-select placeholder="Termino Ult. Embarazo?" [(ngModel)]="paciente.terminoUltimoEmbarazo" name="terminoUltimoEmbarazo"
+                      #terminoUltimoEmbarazo="ngModel" panelClass="select-panel-bg">
+                      <mat-option *ngFor="let sm of terminosUltEmbarazo" [value]="sm.value">
+                        {{ sm.descripcion }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <mat-form-field>
+                    <mat-select placeholder="Legrados?" [(ngModel)]="paciente.hasLegrados" name="hasLegrados" #hasLegrados="ngModel" panelClass="select-panel-bg">
+                      <mat-option *ngFor="let sm of siNo" [value]="sm.value">
+                        {{ sm.descripcion }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </form>
           </div>
         </tab>
         <tab heading="Antec. Gine-Obs">

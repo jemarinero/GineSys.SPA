@@ -15,8 +15,12 @@ export class PacienteDetailResolver implements Resolve<Paciente> {
         private alertify: AlertifyService){}
 
     resolve(route: ActivatedRouteSnapshot) : Observable<Paciente> {
-        return this.pacService.getOne(route.params['id']).catch(error => {
-            this.alertify.error('Sucedio un error al obtener datos.');
+        let id = route.params['id'];
+        if(id && id == 0)
+            return Observable.of(null);
+        
+        return this.pacService.getOne(id).catch(error => {
+            this.alertify.error('Sucedio un error al obtener datos.'+error);
             this.router.navigate(['/']);
             return Observable.of(null);
         });

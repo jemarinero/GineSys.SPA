@@ -10,3 +10,9 @@ export const TerminoUltimoEmbarazo: Array<{value: number, descripcion: string}> 
     {value: 2, descripcion: 'Aborto'},
     {value: 3, descripcion: 'No Aplica'},
 );
+
+export const CantidadMenstruacion: Array<{value: number, descripcion: string}> = Array(
+    {value: 1, descripcion: 'Poca'},
+    {value: 2, descripcion: 'Normal'},
+    {value: 3, descripcion: 'Abundante'},
+);

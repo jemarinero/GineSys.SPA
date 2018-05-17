@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Paciente } from './../../models/paciente';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs/Subscription';
@@ -14,7 +14,7 @@ import { DeleteDialogComponent } from '../../../shared/components/delete-dialog/
   templateUrl: './pacientes.component.html',
   styleUrls: ['./pacientes.component.css']
 })
-export class PacientesComponent implements OnInit {
+export class PacientesComponent implements OnInit, OnDestroy {
   pacientes: Paciente[];
   displayedColumns = [
     'actions',
@@ -68,24 +68,10 @@ export class PacientesComponent implements OnInit {
   }
 
 
-  editDialog(data) {
-    // this.dialog.open(GrupoSanguineoEditComponent, {
-    //   width: '500px',
-    //   data: data
-    // })
-    // .afterClosed()
-    // .subscribe(res => {
-    //   if(res) {
-    //     res.usuarioModificacion = this.authService.decodedToken.unique_name;
-    //     this.update(res);
-    //   }
-    // });
-  }
-
   deleteDialog(data) {
     this.dialog.open(DeleteDialogComponent,{
       width: '500px',
-      data: '['+data.id+'] '+data.descripcion
+      data: '['+data.id+'] '+data.nombre
     })
     .afterClosed()
     .subscribe(res => {

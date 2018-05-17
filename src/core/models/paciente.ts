@@ -35,6 +35,20 @@ export class Paciente {
     cirugias: string;
     isPlanificando: boolean;
     metodoPlanificacion: string;
+    fechaUltimaCitologia: Date;
+    cantidadEmbarazos: number;
+    cantidadHijosVivos: number;
+    cantidadHijosMuertos: number;
+    cantidadCesareas: number;
+    cantidadPartosVaginales: number;
+    cantidadObitos: number;
+    cantidadEctopicos: number;
+    cantidadMolas: number;
+    cantidadAbortos: number;
+    fechaUltimaCesarea: Date;
+    fechaUltimoEmbarazo: Date;
+    terminoUltimoEmbarazo: number;
+    hasLegrados: boolean;
 
     constructor(init?: Partial<Paciente>) {
         Object.assign(this,init);
